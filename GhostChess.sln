@@ -3,9 +3,49 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28721.148
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7F9962A7-28AC-4AE8-9500-E337FDD2983B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{DFA913EB-E7D9-414B-98C7-412F987B1D66}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Console", "src\GhostChess.Console\GhostChess.Console.csproj", "{BDCF0CDA-FE2B-45A3-B09F-A3EF4A47E055}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Web", "src\GhostChess.Web\GhostChess.Web.csproj", "{2051C439-42D8-4256-8FF6-B21654B497C4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.RaspberryPi", "lib\Maissae.RaspberryPi.GPIO\GhostChess.RaspberryPi.csproj", "{88476966-9C25-41AC-B8F2-D83EAC9E646C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessboardSteering", "src\ChessboardSteering\ChessboardSteering.csproj", "{7553AF0A-557C-47CF-8CE1-E4353F201835}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDCF0CDA-FE2B-45A3-B09F-A3EF4A47E055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCF0CDA-FE2B-45A3-B09F-A3EF4A47E055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCF0CDA-FE2B-45A3-B09F-A3EF4A47E055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCF0CDA-FE2B-45A3-B09F-A3EF4A47E055}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2051C439-42D8-4256-8FF6-B21654B497C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2051C439-42D8-4256-8FF6-B21654B497C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2051C439-42D8-4256-8FF6-B21654B497C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2051C439-42D8-4256-8FF6-B21654B497C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88476966-9C25-41AC-B8F2-D83EAC9E646C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88476966-9C25-41AC-B8F2-D83EAC9E646C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88476966-9C25-41AC-B8F2-D83EAC9E646C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88476966-9C25-41AC-B8F2-D83EAC9E646C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7553AF0A-557C-47CF-8CE1-E4353F201835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7553AF0A-557C-47CF-8CE1-E4353F201835}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7553AF0A-557C-47CF-8CE1-E4353F201835}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7553AF0A-557C-47CF-8CE1-E4353F201835}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BDCF0CDA-FE2B-45A3-B09F-A3EF4A47E055} = {7F9962A7-28AC-4AE8-9500-E337FDD2983B}
+		{2051C439-42D8-4256-8FF6-B21654B497C4} = {7F9962A7-28AC-4AE8-9500-E337FDD2983B}
+		{88476966-9C25-41AC-B8F2-D83EAC9E646C} = {DFA913EB-E7D9-414B-98C7-412F987B1D66}
+		{7553AF0A-557C-47CF-8CE1-E4353F201835} = {7F9962A7-28AC-4AE8-9500-E337FDD2983B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3014D7CC-7EEA-435B-A2E8-9180403C8B82}

@@ -1,0 +1,17 @@
+.field.dark {
+  background-color: rgb(145,105,59);
+}
+
+.field.light {
+  background-color: rgb(225,203,87);
+}
+
+.temp {
+  display: block;
+  width: auto;
+}
+
+.field {
+  padding: 5px;
+}
+
