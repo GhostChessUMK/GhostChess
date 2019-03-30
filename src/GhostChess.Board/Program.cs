@@ -16,10 +16,18 @@ namespace GhostChess.Board
 {
     class Program
     {
+        private const int ERROR_BAD_ARGUMENTS = 0xA0;
+
         static void Main(string[] args)
         {
+            if(args.Count().Equals(0))
+            {
+                Console.WriteLine("Error! Put serial port name in arguments ex.");
+                Console.WriteLine("sudo dotnet GhostChess.Board.dll /dev/ttyUSB0");
+                Environment.Exit(ERROR_BAD_ARGUMENTS);
+            }
             Console.WriteLine("Configuring board...");
-            Constants constants = new Constants("/dev/ttyUSB0", 60, 20, 40, 40, 10, 0);
+            Constants constants = new Constants(args.First(), 60, 20, 40, 40, 10, 0);
             RegisterNodes registerNodes = new RegisterNodes();
             RegisterEdges registerEdges = new RegisterEdges();
             Pathfinder pathfinder = new Pathfinder();
