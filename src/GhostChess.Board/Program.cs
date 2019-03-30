@@ -11,6 +11,8 @@ using GhostChess.Board.Abstractions.Configuration;
 using GhostChess.Board.Abstractions.Models;
 using GhostChess.Board.Abstractions.Helpers;
 using static GhostChess.Board.Abstractions.Constants;
+using Microsoft.AspNetCore.SignalR.Client;
+using System.Threading.Tasks;
 
 namespace GhostChess.Board
 {
@@ -18,14 +20,16 @@ namespace GhostChess.Board
     {
         private const int ERROR_BAD_ARGUMENTS = 0xA0;
 
-        static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             if(args.Count().Equals(0))
             {
                 Console.WriteLine("Error! Put serial port name in arguments ex.");
                 Console.WriteLine("sudo dotnet GhostChess.Board.dll /dev/ttyUSB0");
+                Console.WriteLine("./run.sh /dev/ttyUSB0");
                 Environment.Exit(ERROR_BAD_ARGUMENTS);
             }
+
             Console.WriteLine("Configuring board...");
             Constants constants = new Constants(args.First(), 60, 20, 40, 40, 10, 0);
             RegisterNodes registerNodes = new RegisterNodes();
@@ -45,11 +49,16 @@ namespace GhostChess.Board
             Gpio gpio = new Gpio(RaspberryPi.Enums.Pins.Gpio3);
             var controller = new Controller(gpio, serial);
 
+            Console.WriteLine("Initializing SingalR...");
+            var connection = new HubConnectionBuilder()
+              .WithUrl("https://localhost:5000/chess?Password=P@ssw0rd&Board=true")
+              .Build();
+            await connection.StartAsync();
+
             Console.WriteLine("Moving to zero...");
             serial.Open();
-            Thread.Sleep(5000);
-            serial.WriteLine($"G00 X{LeftBoardZeroX} Y{LeftBoardZeroY}");
-            Thread.Sleep((int)(Vector.GetLength(LeftBoardZeroX, LeftBoardZeroY) * mmPerSec + AdditionalSecondSleep));
+            controller.Sleep(5000).Move(LeftBoardZeroX, LeftBoardZeroY)
+                .Sleep((int)(Vector.GetLength(LeftBoardZeroX, LeftBoardZeroY) * mmPerSec + AdditionalSecondSleep));
             //serial.Close();
 
             Console.WriteLine("Ready!");
@@ -65,14 +74,21 @@ namespace GhostChess.Board
                 Console.WriteLine($"Current x: {currentNode.X}");
                 Console.WriteLine($"Current y: {currentNode.Y}");
                 Console.WriteLine();
-                Console.Write("Put source: ");
-                string source = Console.ReadLine();
-                Console.Write("Put destination: ");
-                string destination = Console.ReadLine();
+
+                Node sourceNode = null, destinationNode = null;
+                connection.On<string, string>("Move", (source, destination) =>
+                {
+                    sourceNode = nodes.First(x => x.Name.Equals(source));
+                    destinationNode = nodes.First(x => x.Name.Equals(destination));
+                });
+                //Console.Write("Put source: ");
+                //string source = Console.ReadLine();
+                //Console.Write("Put destination: ");
+                //string destination = Console.ReadLine();
                 Console.WriteLine();
 
-                var sourceNode = nodes.First(x => x.Name.Equals(source));
-                var destinationNode = nodes.First(x => x.Name.Equals(destination));
+                //var sourceNode = nodes.First(x => x.Name.Equals(source));
+                //var destinationNode = nodes.First(x => x.Name.Equals(destination));
 
                 if (destinationNode.isEmpty == false)
                 {
@@ -133,11 +149,11 @@ namespace GhostChess.Board
                         var vector = new Vector(path[i - 1], path[i]);
                         if(vector.X != 0 && vector.Y != 0)
                         {
-                            controller.Move(path[i - 1], path[i]).Sleep((int)(vector.Length * 60 + 300));
+                            controller.Move(path[i - 1], path[i]).Sleep((int)(vector.Length * mmPerSec + AdditionalXYSleep));
                         }
                         else
                         {
-                            controller.Move(path[i - 1], path[i]).Sleep((int)(vector.Length * 60 + 75));
+                            controller.Move(path[i - 1], path[i]).Sleep((int)(vector.Length * mmPerSec + AdditionalXSleep));
                         }
                     }
                     controller.MagnetOff();

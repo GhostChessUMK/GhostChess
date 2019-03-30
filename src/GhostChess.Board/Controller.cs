@@ -30,6 +30,12 @@ namespace GhostChess.Board
             return this;
         }
 
+        public IController Move(double x, double y)
+        {
+            commandList.Add(new MoveCommand(_serial, x, y));
+            return this;
+        }
+
         public IController Sleep(int miliseconds)
         {
             commandList.Add(new SleepCommand(miliseconds));

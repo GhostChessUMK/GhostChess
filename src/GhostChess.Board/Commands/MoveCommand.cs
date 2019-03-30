@@ -12,20 +12,30 @@ namespace GhostChess.Board.Commands
     {
         private SerialPortStream _serial;
         private Node _source, _destination;
+        private double _x, _y;
 
         public MoveCommand(SerialPortStream serial, Node source, Node destination)
         {
             _serial = serial;
             _source = source;
             _destination = destination;
+            var vector = GetMoveVector(_source, _destination);
+            _x = vector.X;
+            _y = vector.Y;
+        }
+
+        public MoveCommand(SerialPortStream serial, double x, double y)
+        {
+            _serial = serial;
+            _x = x;
+            _y = y;
         }
 
         public void Execute()
         {
-            var vector = GetMoveVector(_source, _destination);
             Console.WriteLine($"Moving: {_source.Name} -> {_destination.Name}");
             //_serial.Open();
-            _serial.WriteLine($"G00 X{vector.X} Y{vector.Y}");
+            _serial.WriteLine($"G00 X{_x} Y{_y}");
             //_serial.Close();
         }
 
