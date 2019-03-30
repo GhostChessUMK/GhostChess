@@ -1,10 +1,10 @@
-﻿using ChessboardSteering.Nodes;
+﻿using GhostChess.Board.Abstractions.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ChessboardSteering.Helpers
+namespace GhostChess.Board.Abstractions
 {
     public class Pathfinder
     {

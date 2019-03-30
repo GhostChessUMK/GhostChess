@@ -1,9 +1,8 @@
-﻿using ChessboardSteering.Nodes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessboardSteering
+namespace GhostChess.Board.Abstractions.Models
 {
     public class Vector
     {

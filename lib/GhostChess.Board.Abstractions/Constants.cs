@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessboardSteering.Configuration
+namespace GhostChess.Board.Abstractions
 {
     public class Constants
     {
+        public const double mmPerSec = 60;
+        public const double AdditionalXSleep = 75;
+        public const double AdditionalXYSleep = 300;
+        public const double AdditionalSecondSleep = 1000;
+        public const int BaudRate = 115200;
+        public static string SerialPortName { get; private set;  }
+
         public const double MachineZeroX = 0;
         public const double MachineZeroY = 0;
         public static double CentralBoardZeroX { get; private set; }
@@ -23,9 +30,11 @@ namespace ChessboardSteering.Configuration
         public static double SideFieldOffsetX { get; private set; }
         public static double SideFieldOffsetY { get; private set; }
 
-        public Constants(double boardZeroX, double boardZeroY, double fieldSizeX, double fieldSizeY, 
+        public Constants(string serialPortName, double boardZeroX, double boardZeroY, double fieldSizeX, double fieldSizeY, 
             double sideFieldsOffsetX, double sideFieldsOffsetY)
         {
+            SerialPortName = serialPortName;
+
             FieldSizeX = fieldSizeX;
             FieldSizeY = fieldSizeY;
 

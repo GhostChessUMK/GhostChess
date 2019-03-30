@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace GhostChess.Console
 {
-    class Program
+    public class Program
     {
-        static HubConnection connection;
+        public static HubConnection connection;
 
-        static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             connection = new HubConnectionBuilder()
               .WithUrl("https://localhost:5000/chess?Password=P@ssw0rd&Board=true")

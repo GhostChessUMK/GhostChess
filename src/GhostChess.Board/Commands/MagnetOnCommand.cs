@@ -1,9 +1,10 @@
-﻿using GhostChess.RaspberryPi;
+﻿using GhostChess.Board.Abstractions.Commands;
+using GhostChess.RaspberryPi;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessboardSteering.Commands
+namespace GhostChess.Board.Commands
 {
     public class MagnetOnCommand : ICommand
     {
@@ -17,7 +18,7 @@ namespace ChessboardSteering.Commands
         public void Execute()
         {
             Console.WriteLine("Magnet is on");
-            //_gpio.SetState(Enums.State.High);
+            _gpio.SetState(Enums.State.High);
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using ChessboardSteering.Nodes;
+﻿using GhostChess.Board.Abstractions.Commands;
+using GhostChess.Board.Abstractions.Models;
 using RJCP.IO.Ports;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace ChessboardSteering.Commands
+namespace GhostChess.Board.Commands
 {
     public class MoveCommand : ICommand
     {

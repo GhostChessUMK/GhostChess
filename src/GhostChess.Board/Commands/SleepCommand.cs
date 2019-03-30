@@ -1,9 +1,10 @@
-﻿using System;
+﻿using GhostChess.Board.Abstractions.Commands;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace ChessboardSteering.Commands
+namespace GhostChess.Board.Commands
 {
     public class SleepCommand : ICommand
     {

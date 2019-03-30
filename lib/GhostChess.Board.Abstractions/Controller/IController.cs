@@ -1,9 +1,9 @@
-﻿using ChessboardSteering.Nodes;
+﻿using GhostChess.Board.Abstractions.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessboardSteering.Controller
+namespace GhostChess.Board.Abstractions.Controller
 {
     public interface IController
     {

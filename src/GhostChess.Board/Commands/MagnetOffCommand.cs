@@ -1,9 +1,8 @@
-﻿using GhostChess.RaspberryPi;
+﻿using GhostChess.Board.Abstractions.Commands;
+using GhostChess.RaspberryPi;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ChessboardSteering.Commands
+namespace GhostChess.Board.Commands
 {
     public class MagnetOffCommand : ICommand
     {
@@ -17,7 +16,7 @@ namespace ChessboardSteering.Commands
         public void Execute()
         {
             Console.WriteLine("Magnet is off");
-            //_gpio.SetState(Enums.State.Low);
+            _gpio.SetState(Enums.State.Low);
         }
     }
 }

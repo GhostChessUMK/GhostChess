@@ -1,10 +1,9 @@
-﻿using ChessboardSteering.Configuration;
-using ChessboardSteering.Helpers;
+﻿using GhostChess.Board.Abstractions.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessboardSteering.Nodes
+namespace GhostChess.Board.Abstractions.Configuration
 {
     public class RegisterNodes
     {
@@ -20,7 +19,7 @@ namespace ChessboardSteering.Nodes
             return nodes;
         }
 
-        public void RegisterCentralIntermediateNodes(List<Node> nodes)
+        private void RegisterCentralIntermediateNodes(List<Node> nodes)
         {
             for(int x = 0; x <= 8; x++)
             {
@@ -36,10 +35,9 @@ namespace ChessboardSteering.Nodes
                     nodes.Add(node);
                 }
             }
-            //return nodes;
         }
 
-        public void RegisterLeftIntermediateNodes(List<Node> nodes)
+        private void RegisterLeftIntermediateNodes(List<Node> nodes)
         {
             for (int x = 0; x <= 2; x++)
             {
@@ -56,10 +54,9 @@ namespace ChessboardSteering.Nodes
                     nodes.Add(node);
                 }
             }
-            //return nodes;
         }
 
-        public void RegisterRightIntermediateNodes(List<Node> nodes)
+        private void RegisterRightIntermediateNodes(List<Node> nodes)
         {
             for (int x = 0; x <= 2; x++)
             {
@@ -76,10 +73,9 @@ namespace ChessboardSteering.Nodes
                     nodes.Add(node);
                 }
             }
-            //return nodes;
         }
 
-        public void RegisterCentralBoardNodes(List<Node> nodes)
+        private void RegisterCentralBoardNodes(List<Node> nodes)
         {
             for(int x = 0; x <= 7; x++)
             {
@@ -95,10 +91,9 @@ namespace ChessboardSteering.Nodes
                     nodes.Add(node);
                 }
             }
-            //return nodes;
         }
 
-        public void RegisterLeftBoardNodes(List<Node> nodes)
+        private void RegisterLeftBoardNodes(List<Node> nodes)
         {
             for (int x = 0; x <= 1; x++)
             {
@@ -115,10 +110,9 @@ namespace ChessboardSteering.Nodes
                     nodes.Add(node);
                 }
             }
-            //return nodes;
         }
 
-        public void RegisterRightBoardNodes(List<Node> nodes)
+        private void RegisterRightBoardNodes(List<Node> nodes)
         {
             for (int x = 0; x <= 1; x++)
             {
@@ -135,7 +129,6 @@ namespace ChessboardSteering.Nodes
                     nodes.Add(node);
                 }
             }
-            //return nodes;
         }
     }
 }

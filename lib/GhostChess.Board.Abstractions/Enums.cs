@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessboardSteering.Helpers
+namespace GhostChess.Board.Abstractions
 {
     public class Enums
     {

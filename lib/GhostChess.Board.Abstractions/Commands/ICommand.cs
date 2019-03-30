@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessboardSteering.Commands
+namespace GhostChess.Board.Abstractions.Commands
 {
     public interface ICommand
     {

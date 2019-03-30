@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChessboardSteering.Nodes
+namespace GhostChess.Board.Abstractions.Models
 {
     public class Node
     {
