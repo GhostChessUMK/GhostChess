@@ -1,9 +1,7 @@
 ﻿using GhostChess.Board.Abstractions.Helpers;
 using GhostChess.Board.Abstractions.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GhostChess.Board.Abstractions.Configuration
 {

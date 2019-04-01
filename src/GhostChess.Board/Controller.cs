@@ -4,10 +4,7 @@ using GhostChess.Board.Abstractions.Models;
 using GhostChess.Board.Commands;
 using GhostChess.RaspberryPi;
 using RJCP.IO.Ports;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace GhostChess.Board
 {

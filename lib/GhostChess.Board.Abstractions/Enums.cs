@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GhostChess.Board.Abstractions
+﻿namespace GhostChess.Board.Abstractions
 {
     public class Enums
     {

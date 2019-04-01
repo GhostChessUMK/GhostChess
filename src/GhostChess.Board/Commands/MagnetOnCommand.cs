@@ -1,8 +1,6 @@
 ﻿using GhostChess.Board.Abstractions.Commands;
 using GhostChess.RaspberryPi;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GhostChess.Board.Commands
 {

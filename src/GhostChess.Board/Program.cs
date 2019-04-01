@@ -1,18 +1,15 @@
-﻿using RJCP.IO.Ports;
-using System;
-using System.Threading;
-using System.Linq;
-using System.Text;
-using GhostChess.RaspberryPi;
-using System.Collections;
-using System.Collections.Generic;
-using GhostChess.Board.Abstractions;
+﻿using GhostChess.Board.Abstractions;
 using GhostChess.Board.Abstractions.Configuration;
-using GhostChess.Board.Abstractions.Models;
 using GhostChess.Board.Abstractions.Helpers;
-using static GhostChess.Board.Abstractions.Constants;
+using GhostChess.Board.Abstractions.Models;
+using GhostChess.RaspberryPi;
 using Microsoft.AspNetCore.SignalR.Client;
+using RJCP.IO.Ports;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using static GhostChess.Board.Abstractions.Constants;
 
 namespace GhostChess.Board
 {

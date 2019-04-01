@@ -1,7 +1,5 @@
 ﻿using GhostChess.Board.Abstractions.Commands;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace GhostChess.Board.Commands
