@@ -3,8 +3,8 @@
     public class Constants
     {
         public const double mmPerSec = 60;
-        public const double AdditionalXSleep = 75;
-        public const double AdditionalXYSleep = 300;
+        public const double AdditionalXSleep = 150;
+        public const double AdditionalXYSleep = 600;
         public const double AdditionalSecondSleep = 1000;
         public const int BaudRate = 115200;
         public static string SerialPortName { get; private set;  }

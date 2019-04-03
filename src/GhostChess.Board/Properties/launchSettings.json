@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GhostChess.Board": {
+      "commandName": "Project",
+      "commandLineArgs": "COM4"
+    }
+  }
+}

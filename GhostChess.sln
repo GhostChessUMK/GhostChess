@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.28721.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7F9962A7-28AC-4AE8-9500-E337FDD2983B}"
+	ProjectSection(SolutionItems) = preProject
+		lib\GhostChess.Board.Abstractions\Constants.cs = lib\GhostChess.Board.Abstractions\Constants.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{DFA913EB-E7D9-414B-98C7-412F987B1D66}"
 EndProject
@@ -13,9 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Web", "src\Ghost
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Board", "src\GhostChess.Board\GhostChess.Board.csproj", "{7553AF0A-557C-47CF-8CE1-E4353F201835}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostChess.RaspberryPi", "lib\GhostChess.RaspberryPi\GhostChess.RaspberryPi.csproj", "{C99D46DC-3D0D-424C-A82F-9D3CAB2B36D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.RaspberryPi", "lib\GhostChess.RaspberryPi\GhostChess.RaspberryPi.csproj", "{C99D46DC-3D0D-424C-A82F-9D3CAB2B36D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GhostChess.Board.Abstractions", "lib\GhostChess.Board.Abstractions\GhostChess.Board.Abstractions.csproj", "{7BC78AAB-175E-494B-B3E1-DD8D9E370B08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Board.Abstractions", "lib\GhostChess.Board.Abstractions\GhostChess.Board.Abstractions.csproj", "{7BC78AAB-175E-494B-B3E1-DD8D9E370B08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

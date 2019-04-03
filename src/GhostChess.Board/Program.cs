@@ -43,19 +43,20 @@ namespace GhostChess.Board
             SerialPortStream serial = new SerialPortStream(SerialPortName, BaudRate);           
 
             Console.WriteLine("Configuring gpio pins...");
-            Gpio gpio = new Gpio(RaspberryPi.Enums.Pins.Gpio3);
+            Gpio gpio = new Gpio(RaspberryPi.Enums.Pins.Gpio3, 
+                RaspberryPi.Enums.InputType.Output, RaspberryPi.Enums.State.Low);
             var controller = new Controller(gpio, serial);
 
             Console.WriteLine("Initializing SingalR...");
             var connection = new HubConnectionBuilder()
-              .WithUrl("https://localhost:5000/chess?Password=P@ssw0rd&Board=true")
-              .Build();
-            await connection.StartAsync();
+              .WithUrl("https://ghostchessweb.azurewebsites.net/chess?Password=P@ssw0rd&Board=true")
+              .Build();         
 
             Console.WriteLine("Moving to zero...");
             serial.Open();
             controller.Sleep(5000).Move(LeftBoardZeroX, LeftBoardZeroY)
-                .Sleep((int)(Vector.GetLength(LeftBoardZeroX, LeftBoardZeroY) * mmPerSec + AdditionalSecondSleep));
+                .Sleep((int)(Vector.GetLength(LeftBoardZeroX, LeftBoardZeroY) * mmPerSec + AdditionalSecondSleep))
+                .Execute();
             //serial.Close();
 
             Console.WriteLine("Ready!");
@@ -78,14 +79,18 @@ namespace GhostChess.Board
                     sourceNode = nodes.First(x => x.Name.Equals(source));
                     destinationNode = nodes.First(x => x.Name.Equals(destination));
                 });
+
+                await connection.StartAsync();
+
                 //Console.Write("Put source: ");
                 //string source = Console.ReadLine();
                 //Console.Write("Put destination: ");
                 //string destination = Console.ReadLine();
+
                 Console.WriteLine();
 
-                //var sourceNode = nodes.First(x => x.Name.Equals(source));
-                //var destinationNode = nodes.First(x => x.Name.Equals(destination));
+                //sourceNode = nodes.First(x => x.Name.Equals(source));
+                //destinationNode = nodes.First(x => x.Name.Equals(destination));
 
                 if (destinationNode.isEmpty == false)
                 {

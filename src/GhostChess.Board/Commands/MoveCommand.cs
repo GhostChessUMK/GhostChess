@@ -30,7 +30,14 @@ namespace GhostChess.Board.Commands
 
         public void Execute()
         {
-            Console.WriteLine($"Moving: {_source.Name} -> {_destination.Name}");
+            if (_source != null || _destination != null)
+            {
+                Console.WriteLine($"Moving: {_source.Name} -> {_destination.Name}");
+            }
+            else
+            {
+                Console.WriteLine($"Moving: {_x} -> {_y}");
+            }
             //_serial.Open();
             _serial.WriteLine($"G00 X{_x} Y{_y}");
             //_serial.Close();
