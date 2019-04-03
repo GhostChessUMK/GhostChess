@@ -2,7 +2,7 @@
 {
     public class Constants
     {
-        public const double mmPerSec = 60;
+        public const double mmPerSec = 75;
         public const double AdditionalXSleep = 150;
         public const double AdditionalXYSleep = 600;
         public const double AdditionalSecondSleep = 1000;
