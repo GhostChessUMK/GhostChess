@@ -1,7 +1,9 @@
-﻿namespace GhostChess.Board.Abstractions.Commands
+﻿using System.Threading.Tasks;
+
+namespace GhostChess.Board.Abstractions.Commands
 {
     public interface ICommand
     {
-        void Execute();
+        Task Execute();
     }
 }

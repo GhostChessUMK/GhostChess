@@ -2,6 +2,8 @@
 using GhostChess.Board.Abstractions.Models;
 using RJCP.IO.Ports;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace GhostChess.Board.Commands
 {
@@ -28,7 +30,7 @@ namespace GhostChess.Board.Commands
             _y = y;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
             if (_source != null || _destination != null)
             {
@@ -38,9 +40,15 @@ namespace GhostChess.Board.Commands
             {
                 Console.WriteLine($"Moving: {_x} -> {_y}");
             }
-            //_serial.Open();
+
             _serial.WriteLine($"G00 X{_x} Y{_y}");
-            //_serial.Close();
+            byte[] buffer = new byte[1024];
+            while (true)
+            {
+                await _serial.ReadAsync(buffer);
+                if (System.Text.Encoding.Default.GetString(buffer).Contains("ok"))
+                    return;
+            }
         }
 
         private Vector GetMoveVector(Node source, Node destination)

@@ -43,8 +43,9 @@ namespace GhostChess.Board
             SerialPortStream serial = new SerialPortStream(SerialPortName, BaudRate);
 
             Console.WriteLine("Configuring gpio pins...");
-            Gpio gpio = new Gpio(RaspberryPi.Enums.Pins.Gpio3,
-                RaspberryPi.Enums.InputType.Output, RaspberryPi.Enums.State.Low);
+            //Gpio gpio = new Gpio(RaspberryPi.Enums.Pins.Gpio3,
+            //    RaspberryPi.Enums.InputType.Output, RaspberryPi.Enums.State.Low);
+            Gpio gpio = new Gpio(RaspberryPi.Enums.Pins.Gpio3);
             var controller = new Controller(gpio, serial);
 
             Console.WriteLine("Initializing SingalR...");
@@ -54,8 +55,8 @@ namespace GhostChess.Board
 
             Console.WriteLine("Moving to zero...");
             serial.Open();
-            controller.Sleep(5000).Move(LeftBoardZeroX, LeftBoardZeroY)
-                .Sleep((int)(Vector.GetLength(LeftBoardZeroX, LeftBoardZeroY) * mmPerSec + AdditionalSecondSleep))
+            await controller.Sleep(5000).Move(LeftBoardZeroX, LeftBoardZeroY).Sleep(1000)
+                //.Sleep((int)(Vector.GetLength(LeftBoardZeroX, LeftBoardZeroY) * mmPerSec + AdditionalSecondSleep))
                 .Execute();
             //serial.Close();
 
@@ -64,7 +65,7 @@ namespace GhostChess.Board
 
             var currentNode = nodes.First(t => t.Name.Equals("LI0"));
 
-            connection.On<string, string>("Move", (source, destination) =>
+            connection.On<string, string>("Move", async (source, destination) =>
             {
                 Console.WriteLine("-----------------------------------");
                 Console.WriteLine();
@@ -101,7 +102,8 @@ namespace GhostChess.Board
                     }
 
                     controller.Move(currentNode, destinationNode)
-                        .Sleep((int)(Vector.GetLength(currentNode, destinationNode) * mmPerSec + AdditionalXYSleep))
+                        //.Sleep((int)(Vector.GetLength(currentNode, destinationNode) * mmPerSec + AdditionalXYSleep))
+                        .Sleep(1000)
                         .MagnetOn();
 
                     var path = pathfinder.FindPath(destinationNode, freeNode);
@@ -110,43 +112,48 @@ namespace GhostChess.Board
                         var vector = new Vector(path[i - 1], path[i]);
                         if (vector.X != 0 && vector.Y != 0)
                         {
-                            controller.Move(path[i - 1], path[i]).Sleep((int)(vector.Length * mmPerSec + AdditionalXYSleep));
+                            controller.Move(path[i - 1], path[i]);
+                            //.Sleep((int)(vector.Length * mmPerSec + AdditionalXYSleep));
                         }
                         else
                         {
-                            controller.Move(path[i - 1], path[i]).Sleep((int)(vector.Length * mmPerSec + AdditionalXSleep));
+                            controller.Move(path[i - 1], path[i]);
+                            //.Sleep((int)(vector.Length * mmPerSec + AdditionalXSleep));
                         }
                     }
-                    controller.MagnetOff();
+                    controller.Sleep(1000).MagnetOff();
                     currentNode = path.Last();
                 }
 
                 if (currentNode != sourceNode)
                 {
-                    controller.Move(currentNode, sourceNode).Sleep((int)(Vector.GetLength(currentNode, sourceNode) * mmPerSec + AdditionalXYSleep));
+                    controller.Move(currentNode, sourceNode);
+                    //.Sleep((int)(Vector.GetLength(currentNode, sourceNode) * mmPerSec + AdditionalXYSleep));
                 }
 
                 if (sourceNode != destinationNode)
                 {
-                    controller.MagnetOn();
+                    controller.Sleep(1000).MagnetOn();
                     var path = pathfinder.FindPath(sourceNode, destinationNode);
                     for (int i = 1; i < path.Count; i++)
                     {
                         var vector = new Vector(path[i - 1], path[i]);
                         if (vector.X != 0 && vector.Y != 0)
                         {
-                            controller.Move(path[i - 1], path[i]).Sleep((int)(vector.Length * mmPerSec + AdditionalXYSleep));
+                            controller.Move(path[i - 1], path[i]);
+                            //.Sleep((int)(vector.Length * mmPerSec + AdditionalXYSleep));
                         }
                         else
                         {
-                            controller.Move(path[i - 1], path[i]).Sleep((int)(vector.Length * mmPerSec + AdditionalXSleep));
+                            controller.Move(path[i - 1], path[i]);
+                            //.Sleep((int)(vector.Length * mmPerSec + AdditionalXSleep));
                         }
                     }
-                    controller.MagnetOff();
+                    controller.Sleep(1000).MagnetOff();
                     currentNode = path.Last();
                 }
 
-                controller.Execute();
+                await controller.Execute();
             });
 
             await connection.StartAsync();

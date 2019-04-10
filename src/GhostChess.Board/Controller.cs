@@ -5,6 +5,8 @@ using GhostChess.Board.Commands;
 using GhostChess.RaspberryPi;
 using RJCP.IO.Ports;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GhostChess.Board
 {
@@ -51,11 +53,12 @@ namespace GhostChess.Board
             return this;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
             foreach(var command in commandList)
             {
-                command.Execute();
+                await command.Execute();
+                Thread.Sleep(250);
             }
             commandList.Clear();
         }

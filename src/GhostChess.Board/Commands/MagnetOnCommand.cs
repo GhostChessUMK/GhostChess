@@ -1,6 +1,7 @@
 ﻿using GhostChess.Board.Abstractions.Commands;
 using GhostChess.RaspberryPi;
 using System;
+using System.Threading.Tasks;
 
 namespace GhostChess.Board.Commands
 {
@@ -13,10 +14,10 @@ namespace GhostChess.Board.Commands
             _gpio = gpio;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
             Console.WriteLine("Magnet is on");
-            _gpio.SetState(Enums.State.High);
+            //_gpio.SetState(Enums.State.High);
         }
     }
 }

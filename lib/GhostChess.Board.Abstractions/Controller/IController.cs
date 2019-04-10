@@ -1,4 +1,5 @@
 ﻿using GhostChess.Board.Abstractions.Models;
+using System.Threading.Tasks;
 
 namespace GhostChess.Board.Abstractions.Controller
 {
@@ -9,6 +10,6 @@ namespace GhostChess.Board.Abstractions.Controller
         IController Sleep(int miliseconds);
         IController MagnetOn();
         IController MagnetOff();
-        void Execute();
+        Task Execute();
     }
 }

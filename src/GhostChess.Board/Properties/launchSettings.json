@@ -2,7 +2,7 @@
   "profiles": {
     "GhostChess.Board": {
       "commandName": "Project",
-      "commandLineArgs": "COM4"
+      "commandLineArgs": "COM3"
     }
   }
 }
