@@ -54,16 +54,26 @@ namespace GhostChess.Board
               .Build();
 
             Console.WriteLine("Moving to zero...");
+            byte[] buffer = new byte[1024];
             serial.Open();
-            await controller.Sleep(5000).Move(LeftBoardZeroX, LeftBoardZeroY).Sleep(1000)
+            while(true)
+            {
+                await serial.ReadAsync(buffer);
+                var response = System.Text.Encoding.Default.GetString(buffer);
+                if (response.Contains("start"))
+                    break;
+            }
+            serial.DiscardOutBuffer();
+            controller.Move(LeftBoardZeroX, LeftBoardZeroY).Sleep(1000);
                 //.Sleep((int)(Vector.GetLength(LeftBoardZeroX, LeftBoardZeroY) * mmPerSec + AdditionalSecondSleep))
-                .Execute();
             //serial.Close();
-
-            Console.WriteLine("Ready!");
+            
             Console.WriteLine();
 
             var currentNode = nodes.First(t => t.Name.Equals("LI0"));
+
+            await Task.Factory.StartNew(controller.Run, TaskCreationOptions.LongRunning);
+            Console.WriteLine("Controller initialized...");
 
             connection.On<string, string>("Move", async (source, destination) =>
             {
@@ -152,8 +162,6 @@ namespace GhostChess.Board
                     controller.Sleep(1000).MagnetOff();
                     currentNode = path.Last();
                 }
-
-                await controller.Execute();
             });
 
             await connection.StartAsync();

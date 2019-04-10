@@ -10,6 +10,6 @@ namespace GhostChess.Board.Abstractions.Controller
         IController Sleep(int miliseconds);
         IController MagnetOn();
         IController MagnetOff();
-        Task Execute();
+        Task Run();
     }
 }

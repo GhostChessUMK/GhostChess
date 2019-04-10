@@ -12,7 +12,7 @@ namespace GhostChess.Board
 {
     public class Controller : IController
     {
-        private IList<ICommand> commandList;
+        private Queue<ICommand> commandList;
         private SerialPortStream _serial;
         private Gpio _gpio;
 
@@ -20,47 +20,49 @@ namespace GhostChess.Board
         {
             _gpio = gpio;
             _serial = serial;
-            commandList = new List<ICommand>();
+            commandList = new Queue<ICommand>();
         }
 
         public IController Move(Node source, Node destination)
         {
-            commandList.Add(new MoveCommand(_serial, source, destination));
+            commandList.Enqueue(new MoveCommand(_serial, source, destination));
             return this;
         }
 
         public IController Move(double x, double y)
         {
-            commandList.Add(new MoveCommand(_serial, x, y));
+            commandList.Enqueue(new MoveCommand(_serial, x, y));
             return this;
         }
 
         public IController Sleep(int miliseconds)
         {
-            commandList.Add(new SleepCommand(miliseconds));
+            commandList.Enqueue(new SleepCommand(miliseconds));
             return this;
         }
 
         public IController MagnetOn()
         {
-            commandList.Add(new MagnetOnCommand(_gpio));
+            commandList.Enqueue(new MagnetOnCommand(_gpio));
             return this;
         }
 
         public IController MagnetOff()
         {
-            commandList.Add(new MagnetOffCommand(_gpio));
+            commandList.Enqueue(new MagnetOffCommand(_gpio));
             return this;
         }
 
-        public async Task Execute()
+        public async Task Run()
         {
-            foreach(var command in commandList)
-            {
-                await command.Execute();
-                Thread.Sleep(250);
+            while(true)
+            {   
+                if(commandList.TryDequeue(out var command))
+                {
+                    await command.Execute();
+                    //Thread.Sleep(500);
+                }
             }
-            commandList.Clear();
         }
     }
 }

@@ -42,12 +42,22 @@ namespace GhostChess.Board.Commands
             }
 
             _serial.WriteLine($"G00 X{_x} Y{_y}");
+            await MoveFinished();
+        }
+
+        private async Task MoveFinished()
+        {
             byte[] buffer = new byte[1024];
             while (true)
             {
                 await _serial.ReadAsync(buffer);
-                if (System.Text.Encoding.Default.GetString(buffer).Contains("ok"))
+                var response = System.Text.Encoding.Default.GetString(buffer);
+                if (response.Contains("ok"))
+                {
+                    _serial.DiscardOutBuffer();
                     return;
+                }
+                    
             }
         }
 
