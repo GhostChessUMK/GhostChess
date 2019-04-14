@@ -56,8 +56,7 @@ namespace GhostChess.Board.Commands
                 {
                     _serial.DiscardOutBuffer();
                     return;
-                }
-                    
+                }                    
             }
         }
 

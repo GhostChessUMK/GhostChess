@@ -1,5 +1,6 @@
 ﻿using GhostChess.Board.Abstractions.Commands;
 using GhostChess.Board.Abstractions.Controller;
+using GhostChess.Board.Abstractions.Helpers;
 using GhostChess.Board.Abstractions.Models;
 using GhostChess.Board.Commands;
 using GhostChess.RaspberryPi;
@@ -15,11 +16,13 @@ namespace GhostChess.Board
         private Queue<ICommand> commandList;
         private SerialPortStream _serial;
         private Gpio _gpio;
+        private Node _currentNode;
 
-        public Controller(Gpio gpio, SerialPortStream serial)
+        public Controller(Gpio gpio, SerialPortStream serial, Node currentNode)
         {
             _gpio = gpio;
             _serial = serial;
+            _currentNode = currentNode;
             commandList = new Queue<ICommand>();
         }
 
@@ -50,6 +53,12 @@ namespace GhostChess.Board
         public IController MagnetOff()
         {
             commandList.Enqueue(new MagnetOffCommand(_gpio));
+            return this;
+        }
+
+        public IController InitBoard(List<Node> nodes)
+        {
+            commandList.Enqueue(new InitBoardCommand(nodes));
             return this;
         }
 

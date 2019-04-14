@@ -46,7 +46,7 @@ namespace GhostChess.Board
             //Gpio gpio = new Gpio(RaspberryPi.Enums.Pins.Gpio3,
             //    RaspberryPi.Enums.InputType.Output, RaspberryPi.Enums.State.Low);
             Gpio gpio = new Gpio(RaspberryPi.Enums.Pins.Gpio3);
-            var controller = new Controller(gpio, serial);
+            var controller = new Controller(gpio, serial, NodeHelper.GetInitNode(nodes));
 
             Console.WriteLine("Initializing SingalR...");
             var connection = new HubConnectionBuilder()

@@ -1,6 +1,7 @@
 ﻿using GhostChess.Board.Abstractions.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace GhostChess.Board.Abstractions.Helpers
 {
@@ -138,6 +139,17 @@ namespace GhostChess.Board.Abstractions.Helpers
         public static Node GetRightIntermediateBoundryNode(List<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X + Constants.SideFieldOffsetX) && t.Y.Equals(origin.Y));
+        }
+
+        public static List<Node> GetSetUpNodes(List<Node> nodes)
+        {
+            Regex regex = new Regex(@"[A-H]([1-2]|[7-8])");
+            return nodes.FindAll(t => regex.Match(t.Name).Success);
+        }
+
+        public static Node GetInitNode(List<Node> nodes)
+        {
+            return nodes.FirstOrDefault(t => t.Name.Equals("LI0"));
         }
     }
 }
