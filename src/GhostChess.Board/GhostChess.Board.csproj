@@ -17,6 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\lib\GhostChess.Board.Abstractions\GhostChess.Board.Abstractions.csproj" />
+    <ProjectReference Include="..\..\lib\GhostChess.Board.Configuration\GhostChess.Board.Configuration.csproj" />
+    <ProjectReference Include="..\..\lib\GhostChess.Board.Models\GhostChess.Board.Models.csproj" />
+    <ProjectReference Include="..\..\lib\GhostChess.Board.Pathfinders\GhostChess.Board.Algorithms.csproj" />
     <ProjectReference Include="..\..\lib\GhostChess.RaspberryPi\GhostChess.RaspberryPi.csproj" />
   </ItemGroup>
 

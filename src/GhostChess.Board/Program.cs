@@ -1,7 +1,8 @@
 ﻿using GhostChess.Board.Abstractions;
 using GhostChess.Board.Abstractions.Configuration;
-using GhostChess.Board.Abstractions.Helpers;
-using GhostChess.Board.Abstractions.Models;
+using GhostChess.Board.Configuration.Mappers;
+using GhostChess.Board.Configuration;
+using GhostChess.Board.Models;
 using GhostChess.RaspberryPi;
 using Microsoft.AspNetCore.SignalR.Client;
 using RJCP.IO.Ports;
@@ -9,7 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static GhostChess.Board.Abstractions.Constants;
+using GhostChess.Board.Algorithms.Pathfinders;
+using static GhostChess.Board.Configuration.Constants;
 
 namespace GhostChess.Board
 {
@@ -32,15 +34,15 @@ namespace GhostChess.Board
 
             Console.WriteLine("Configuring board...");
             Constants constants = new Constants(args.First(), 60, 20, 40, 40, 10, 0);
-            RegisterNodes registerNodes = new RegisterNodes();
-            RegisterEdges registerEdges = new RegisterEdges();
-            Pathfinder pathfinder = new Pathfinder();
+            NodeMapper nodeMapper = new NodeMapper();
+            EdgeMapper edgeMapper = new EdgeMapper();
+            BreadthFirst pathfinder = new BreadthFirst();
 
             Console.WriteLine("Registering nodes...");
-            var nodes = registerNodes.Register();
+            var nodes = nodeMapper.Register();
 
             Console.WriteLine("Registering edges...");
-            registerEdges.Register(nodes);
+            edgeMapper.Register(nodes);
 
             Console.WriteLine("Configuring serial port...");
             SerialPortStream serial = new SerialPortStream(SerialPortName, BaudRate);

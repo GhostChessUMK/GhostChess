@@ -1,5 +1,5 @@
 ﻿using GhostChess.Board.Abstractions.Commands;
-using GhostChess.Board.Abstractions.Models;
+using GhostChess.Board.Models;
 using RJCP.IO.Ports;
 using System;
 using System.IO;

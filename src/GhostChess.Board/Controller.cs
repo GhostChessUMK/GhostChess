@@ -1,7 +1,7 @@
 ﻿using GhostChess.Board.Abstractions.Commands;
 using GhostChess.Board.Abstractions.Controller;
-using GhostChess.Board.Abstractions.Helpers;
-using GhostChess.Board.Abstractions.Models;
+using GhostChess.Board.Configuration;
+using GhostChess.Board.Models;
 using GhostChess.Board.Commands;
 using GhostChess.RaspberryPi;
 using RJCP.IO.Ports;
@@ -53,13 +53,6 @@ namespace GhostChess.Board
         public IController MagnetOff()
         {
             commandList.Enqueue(new MagnetOffCommand(_gpio));
-            return this;
-        }
-
-        //TODO: Remove
-        public IController InitBoard(List<Node> nodes)
-        {
-            commandList.Enqueue(new InitBoardCommand(nodes));
             return this;
         }
 
