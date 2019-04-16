@@ -6,18 +6,17 @@ namespace GhostChess.Board.Configuration.Mappers
 {
     public class EdgeMapper
     {
-        //TODO: Move to separate lib, [configuration]
         //TODO: v2 reinforce code to be independent of field sizes
-        public void Register(List<Node> nodes)
+        public void Map(IEnumerable<Node> nodes)
         {
-            RegisterCentralAndIntermediateEdges(nodes);
-            RegisterAdditionalCentralEdges(nodes);
-            RegisterBoundryEdges(nodes);
+            MapCentralAndIntermediateEdges(nodes);
+            MapAdditionalCentralEdges(nodes);
+            MapBoundryEdges(nodes);
         }
 
-        private void RegisterAdditionalCentralEdges(List<Node> nodes)
+        private void MapAdditionalCentralEdges(IEnumerable<Node> nodes)
         {
-            List<Node> centralNodes = NodeHelper.GetAllCentralNodes(nodes);
+            IEnumerable<Node> centralNodes = NodeHelper.GetAllCentralNodes(nodes);
 
             foreach(var node in centralNodes)
             {
@@ -48,7 +47,7 @@ namespace GhostChess.Board.Configuration.Mappers
 
         }
 
-        private void RegisterCentralAndIntermediateEdges(List<Node> nodes)
+        private void MapCentralAndIntermediateEdges(IEnumerable<Node> nodes)
         {
             foreach(var node in nodes)
             {
@@ -62,7 +61,7 @@ namespace GhostChess.Board.Configuration.Mappers
             }
         }
 
-        private void RegisterBoundryEdges(List<Node> nodes)
+        private void MapBoundryEdges(IEnumerable<Node> nodes)
         {
             var leftCentralBoundryNodes = NodeHelper.GetLeftCentralBoundryNodes(nodes);
             var rightCentralBoundryNodes = NodeHelper.GetRightCentralBoundryNodes(nodes);

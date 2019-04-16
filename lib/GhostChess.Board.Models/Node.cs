@@ -4,7 +4,6 @@ namespace GhostChess.Board.Models
 {
     public class Node
     {
-        //TODO: Move to models
         public string Name { get; }
         public double X { get; }
         public double Y { get; }
@@ -19,6 +18,6 @@ namespace GhostChess.Board.Models
             isEmpty = true;
         }
 
-        public List<Node> ConnectedNodes { get; set; }
+        public IEnumerable<Node> ConnectedNodes { get; set; }
     }
 }

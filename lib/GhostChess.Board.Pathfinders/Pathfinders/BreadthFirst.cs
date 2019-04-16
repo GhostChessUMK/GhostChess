@@ -1,13 +1,13 @@
-﻿using GhostChess.Board.Models;
+﻿using GhostChess.Board.Abstractions.Pathfinders;
+using GhostChess.Board.Models;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GhostChess.Board.Algorithms.Pathfinders
 {
-    public class BreadthFirst
+    public class BreadthFirst : IPathfinder
     {
-        //TODO: Move to Core or separate lib, add IPathfinder, change class name to Breadth First, retrun IEnumerable
-        public List<Node> FindPath(Node source, Node destination)
+        public IEnumerable<Node> FindPath(Node source, Node target)
         {
             List<Node> visitedNodes = new List<Node>();
             Queue<List<Node>> pathToVisit = new Queue<List<Node>>();
@@ -20,7 +20,7 @@ namespace GhostChess.Board.Algorithms.Pathfinders
                 List<Node> currentPath = pathToVisit.Dequeue();
                 Node lastNode = currentPath.ElementAt(currentPath.Count - 1);
 
-                if (lastNode == destination)
+                if (lastNode == target)
                 {
                     return currentPath;
                 }

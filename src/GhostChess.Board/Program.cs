@@ -39,10 +39,10 @@ namespace GhostChess.Board
             BreadthFirst pathfinder = new BreadthFirst();
 
             Console.WriteLine("Registering nodes...");
-            var nodes = nodeMapper.Register();
+            var nodes = nodeMapper.Map();
 
             Console.WriteLine("Registering edges...");
-            edgeMapper.Register(nodes);
+            edgeMapper.Map(nodes);
 
             Console.WriteLine("Configuring serial port...");
             SerialPortStream serial = new SerialPortStream(SerialPortName, BaudRate);
@@ -95,7 +95,7 @@ namespace GhostChess.Board
                 if (destinationNode.isEmpty == false)
                 {
                     Node freeNode = null;
-                    List<Node> colorNodes;
+                    IEnumerable<Node> colorNodes;
                     var color = Abstractions.Enums.Colors.Black;
 
                     if (color == Abstractions.Enums.Colors.White)
@@ -122,17 +122,17 @@ namespace GhostChess.Board
                         .MagnetOn();
 
                     var path = pathfinder.FindPath(destinationNode, freeNode);
-                    for (int i = 1; i < path.Count; i++)
+                    for (int i = 1; i < path.Count(); i++)
                     {
-                        var vector = new Vector(path[i - 1], path[i]);
+                        var vector = new Vector(path.ElementAt(i - 1), path.ElementAt(i));
                         if (vector.X != 0 && vector.Y != 0)
                         {
-                            controller.Move(path[i - 1], path[i]);
+                            controller.Move(path.ElementAt(i - 1), path.ElementAt(i));
                             //.Sleep((int)(vector.Length * mmPerSec + AdditionalXYSleep));
                         }
                         else
                         {
-                            controller.Move(path[i - 1], path[i]);
+                            controller.Move(path.ElementAt(i - 1), path.ElementAt(i));
                             //.Sleep((int)(vector.Length * mmPerSec + AdditionalXSleep));
                         }
                     }
@@ -150,17 +150,17 @@ namespace GhostChess.Board
                 {
                     controller.Sleep(1000).MagnetOn();
                     var path = pathfinder.FindPath(sourceNode, destinationNode);
-                    for (int i = 1; i < path.Count; i++)
+                    for (int i = 1; i < path.Count(); i++)
                     {
-                        var vector = new Vector(path[i - 1], path[i]);
+                        var vector = new Vector(path.ElementAt(i - 1), path.ElementAt(i));
                         if (vector.X != 0 && vector.Y != 0)
                         {
-                            controller.Move(path[i - 1], path[i]);
+                            controller.Move(path.ElementAt(i - 1), path.ElementAt(i));
                             //.Sleep((int)(vector.Length * mmPerSec + AdditionalXYSleep));
                         }
                         else
                         {
-                            controller.Move(path[i - 1], path[i]);
+                            controller.Move(path.ElementAt(i - 1), path.ElementAt(i));
                             //.Sleep((int)(vector.Length * mmPerSec + AdditionalXSleep));
                         }
                     }

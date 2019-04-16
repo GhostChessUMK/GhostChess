@@ -7,21 +7,20 @@ namespace GhostChess.Board.Configuration.Mappers
 {
     public class NodeMapper
     {
-        //TODO: Move to separate lib, [configuration]
         //TODO: v2 reinforce code to be independent of field sizes
-        public List<Node> Register()
+        public IEnumerable<Node> Map()
         {
             List<Node> nodes = new List<Node>();
-            RegisterCentralBoardNodes(nodes);
-            RegisterCentralIntermediateNodes(nodes);
-            RegisterLeftBoardNodes(nodes);
-            RegisterLeftIntermediateNodes(nodes);
-            RegisterRightBoardNodes(nodes);
-            RegisterRightIntermediateNodes(nodes);
+            MapCentralBoardNodes(nodes);
+            MapCentralIntermediateNodes(nodes);
+            MapLeftBoardNodes(nodes);
+            MapLeftIntermediateNodes(nodes);
+            MapRightBoardNodes(nodes);
+            MapRightIntermediateNodes(nodes);
             return nodes;
         }
 
-        private void RegisterCentralIntermediateNodes(List<Node> nodes)
+        private void MapCentralIntermediateNodes(List<Node> nodes)
         {
             for(int x = 0; x <= 8; x++)
             {
@@ -39,7 +38,7 @@ namespace GhostChess.Board.Configuration.Mappers
             }
         }
 
-        private void RegisterLeftIntermediateNodes(List<Node> nodes)
+        private void MapLeftIntermediateNodes(List<Node> nodes)
         {
             for (int x = 0; x <= 2; x++)
             {
@@ -58,7 +57,7 @@ namespace GhostChess.Board.Configuration.Mappers
             }
         }
 
-        private void RegisterRightIntermediateNodes(List<Node> nodes)
+        private void MapRightIntermediateNodes(List<Node> nodes)
         {
             for (int x = 0; x <= 2; x++)
             {
@@ -77,7 +76,7 @@ namespace GhostChess.Board.Configuration.Mappers
             }
         }
 
-        private void RegisterCentralBoardNodes(List<Node> nodes)
+        private void MapCentralBoardNodes(List<Node> nodes)
         {
             for(int x = 0; x <= 7; x++)
             {
@@ -95,7 +94,7 @@ namespace GhostChess.Board.Configuration.Mappers
             }
         }
 
-        private void RegisterLeftBoardNodes(List<Node> nodes)
+        private void MapLeftBoardNodes(List<Node> nodes)
         {
             for (int x = 0; x <= 1; x++)
             {
@@ -114,7 +113,7 @@ namespace GhostChess.Board.Configuration.Mappers
             }
         }
 
-        private void RegisterRightBoardNodes(List<Node> nodes)
+        private void MapRightBoardNodes(List<Node> nodes)
         {
             for (int x = 0; x <= 1; x++)
             {

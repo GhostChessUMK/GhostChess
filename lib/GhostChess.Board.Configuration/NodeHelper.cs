@@ -7,8 +7,8 @@ namespace GhostChess.Board.Configuration
 {
     public static class NodeHelper
     {
-        //TODO: Move to separate class with extension methods (Intermediate/Central), inject/return IEnumerable with nodes
-        public static List<Node> GetRightCentralNodes(List<Node> nodes)
+        //TODO: Move to separate class with extension methods (Intermediate/Central)
+        public static IEnumerable<Node> GetRightCentralNodes(IEnumerable<Node> nodes)
         {
             List<Node> rightNodes = new List<Node>();
             foreach (var node in nodes)
@@ -21,7 +21,7 @@ namespace GhostChess.Board.Configuration
             return rightNodes;
         }
 
-        public static List<Node> GetLeftCentralNodes(List<Node> nodes)
+        public static IEnumerable<Node> GetLeftCentralNodes(IEnumerable<Node> nodes)
         {
             List<Node> leftNodes = new List<Node>();
             foreach (var node in nodes)
@@ -34,24 +34,24 @@ namespace GhostChess.Board.Configuration
             return leftNodes;
         }
 
-        public static List<Node> GetNodesAround(List<Node> nodes, Node origin)
+        public static IEnumerable<Node> GetNodesAround(IEnumerable<Node> nodes, Node source)
         {
             List<Node> neighbouringNodes = new List<Node>();
 
-            neighbouringNodes.Add(GetLeftNode(nodes, origin));
-            neighbouringNodes.Add(GetRightNode(nodes, origin));
-            neighbouringNodes.Add(GetUpperNode(nodes, origin));
-            neighbouringNodes.Add(GetLowerNode(nodes, origin));
-            neighbouringNodes.Add(GetUpperLeftNode(nodes, origin));
-            neighbouringNodes.Add(GetUpperRightNode(nodes, origin));
-            neighbouringNodes.Add(GetLowerLeftNode(nodes, origin));
-            neighbouringNodes.Add(GetLowerRightNode(nodes, origin));
+            neighbouringNodes.Add(GetLeftNode(nodes, source));
+            neighbouringNodes.Add(GetRightNode(nodes, source));
+            neighbouringNodes.Add(GetUpperNode(nodes, source));
+            neighbouringNodes.Add(GetLowerNode(nodes, source));
+            neighbouringNodes.Add(GetUpperLeftNode(nodes, source));
+            neighbouringNodes.Add(GetUpperRightNode(nodes, source));
+            neighbouringNodes.Add(GetLowerLeftNode(nodes, source));
+            neighbouringNodes.Add(GetLowerRightNode(nodes, source));
 
             neighbouringNodes.RemoveAll(t => t == null);
             return neighbouringNodes;
         }
 
-        public static List<Node> GetAllCentralNodes(List<Node> nodes)
+        public static IEnumerable<Node> GetAllCentralNodes(IEnumerable<Node> nodes)
         {
             return nodes.FindAll(t =>
                 t.Name.StartsWith("A") ||
@@ -63,92 +63,92 @@ namespace GhostChess.Board.Configuration
                 t.Name.StartsWith("G") ||
                 t.Name.StartsWith("H"));
         }
-        public static Node GetLeftNode(List<Node> nodes, Node origin)
+        public static Node GetLeftNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X - Constants.FieldSizeX) && t.Y.Equals(origin.Y));
         }
 
-        public static Node GetRightNode(List<Node> nodes, Node origin)
+        public static Node GetRightNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X + Constants.FieldSizeX) && t.Y.Equals(origin.Y));
         }
 
-        public static Node GetUpperNode(List<Node> nodes, Node origin)
+        public static Node GetUpperNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X) && t.Y.Equals(origin.Y + Constants.FieldSizeY));
         }
 
-        public static Node GetLowerNode(List<Node> nodes, Node origin)
+        public static Node GetLowerNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X) && t.Y.Equals(origin.Y - Constants.FieldSizeY));
         }
 
-        public static Node GetUpperLeftNode(List<Node> nodes, Node origin)
+        public static Node GetUpperLeftNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X - (Constants.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y + (Constants.FieldSizeY / 2.0)));
         }
 
-        public static Node GetLowerLeftNode(List<Node> nodes, Node origin)
+        public static Node GetLowerLeftNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X - (Constants.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y - (Constants.FieldSizeY / 2.0)));
         }
-        public static Node GetUpperRightNode(List<Node> nodes, Node origin)
+        public static Node GetUpperRightNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X + (Constants.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y + (Constants.FieldSizeY / 2.0)));
         }
 
-        public static Node GetLowerRightNode(List<Node> nodes, Node origin)
+        public static Node GetLowerRightNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X + (Constants.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y - (Constants.FieldSizeY / 2.0)));
         }
 
-        public static List<Node> GetLeftIntermediateBoundryNodes(List<Node> nodes)
+        public static List<Node> GetLeftIntermediateBoundryNodes(IEnumerable<Node> nodes)
         {
             return nodes.FindAll(t => t.Name.StartsWith("LK") || t.Name.StartsWith("R"));
         }
 
-        public static List<Node> GetRightIntermediateBoundryNodes(List<Node> nodes)
+        public static List<Node> GetRightIntermediateBoundryNodes(IEnumerable<Node> nodes)
         {
             return nodes.FindAll(t => t.Name.StartsWith("I") || t.Name.StartsWith("RI"));
         }
 
-        public static List<Node> GetLeftCentralBoundryNodes(List<Node> nodes)
+        public static List<Node> GetLeftCentralBoundryNodes(IEnumerable<Node> nodes)
         {
             return nodes.FindAll(t => t.Name.StartsWith("LB") || t.Name.StartsWith("H"));
         }
 
-        public static List<Node> GetRightCentralBoundryNodes(List<Node> nodes)
+        public static List<Node> GetRightCentralBoundryNodes(IEnumerable<Node> nodes)
         {
             return nodes.FindAll(t => t.Name.StartsWith("A") || t.Name.StartsWith("RA"));
         }
 
-        public static Node GetLeftCentralBoundryNode(List<Node> nodes, Node origin)
+        public static Node GetLeftCentralBoundryNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X - Constants.FieldSizeX - Constants.SideFieldOffsetX) && t.Y.Equals(origin.Y));
         }
 
-        public static Node GetRightCentralBoundryNode(List<Node> nodes, Node origin)
+        public static Node GetRightCentralBoundryNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X + Constants.FieldSizeX + Constants.SideFieldOffsetX) && t.Y.Equals(origin.Y));
         }
 
-        public static Node GetLeftIntermediateBoundryNode(List<Node> nodes, Node origin)
+        public static Node GetLeftIntermediateBoundryNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X - Constants.SideFieldOffsetX) && t.Y.Equals(origin.Y));
         }
 
-        public static Node GetRightIntermediateBoundryNode(List<Node> nodes, Node origin)
+        public static Node GetRightIntermediateBoundryNode(IEnumerable<Node> nodes, Node origin)
         {
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X + Constants.SideFieldOffsetX) && t.Y.Equals(origin.Y));
         }
 
-        public static List<Node> GetSetUpNodes(List<Node> nodes)
+        public static IEnumerable<Node> GetSetUpNodes(IEnumerable<Node> nodes)
         {
             Regex regex = new Regex(@"[A-H]([1-2]|[7-8])");
             return nodes.FindAll(t => regex.Match(t.Name).Success);
         }
 
-        public static Node GetInitNode(List<Node> nodes)
+        public static Node GetInitNode(IEnumerable<Node> nodes)
         {
             return nodes.FirstOrDefault(t => t.Name.Equals("LI0"));
         }
