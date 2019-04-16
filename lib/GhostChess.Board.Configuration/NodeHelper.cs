@@ -5,11 +5,18 @@ using System.Text.RegularExpressions;
 
 namespace GhostChess.Board.Configuration
 {
-    public static class NodeHelper
+    public class NodeHelper
     {
+        private readonly BoardConfiguration _boardConfiguration;
+
+        public NodeHelper(BoardConfiguration boardConfiguration)
+        {
+            _boardConfiguration = boardConfiguration;
+        }
+
         //TODO: Move to separate class with extension methods (Intermediate/Central)
         //TODO: Add Regex to searches
-        public static IEnumerable<Node> GetRightCentralNodes(IEnumerable<Node> nodes)
+        public IEnumerable<Node> GetRightCentralNodes(IEnumerable<Node> nodes)
         {
             List<Node> rightNodes = new List<Node>();
             foreach (var node in nodes)
@@ -22,7 +29,7 @@ namespace GhostChess.Board.Configuration
             return rightNodes;
         }
 
-        public static IEnumerable<Node> GetLeftCentralNodes(IEnumerable<Node> nodes)
+        public  IEnumerable<Node> GetLeftCentralNodes(IEnumerable<Node> nodes)
         {
             List<Node> leftNodes = new List<Node>();
             foreach (var node in nodes)
@@ -35,7 +42,7 @@ namespace GhostChess.Board.Configuration
             return leftNodes;
         }
 
-        public static IEnumerable<Node> GetNodesAround(IEnumerable<Node> nodes, Node source)
+        public  IEnumerable<Node> GetNodesAround(IEnumerable<Node> nodes, Node source)
         {
             List<Node> neighbouringNodes = new List<Node>();
 
@@ -52,7 +59,7 @@ namespace GhostChess.Board.Configuration
             return neighbouringNodes;
         }
 
-        public static IEnumerable<Node> GetAllCentralNodes(IEnumerable<Node> nodes)
+        public  IEnumerable<Node> GetAllCentralNodes(IEnumerable<Node> nodes)
         {
             return nodes.Where(t =>
                 t.Name.StartsWith("A") ||
@@ -65,92 +72,92 @@ namespace GhostChess.Board.Configuration
                 t.Name.StartsWith("H"))
                 .ToList();
         }
-        public static Node GetLeftNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetLeftNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X - Constants.FieldSizeX) && t.Y.Equals(origin.Y));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X - _boardConfiguration.FieldSizeX) && t.Y.Equals(origin.Y));
         }
 
-        public static Node GetRightNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetRightNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X + Constants.FieldSizeX) && t.Y.Equals(origin.Y));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X + _boardConfiguration.FieldSizeX) && t.Y.Equals(origin.Y));
         }
 
-        public static Node GetUpperNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetUpperNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X) && t.Y.Equals(origin.Y + Constants.FieldSizeY));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X) && t.Y.Equals(origin.Y + _boardConfiguration.FieldSizeY));
         }
 
-        public static Node GetLowerNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetLowerNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X) && t.Y.Equals(origin.Y - Constants.FieldSizeY));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X) && t.Y.Equals(origin.Y - _boardConfiguration.FieldSizeY));
         }
 
-        public static Node GetUpperLeftNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetUpperLeftNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X - (Constants.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y + (Constants.FieldSizeY / 2.0)));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X - (_boardConfiguration.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y + (_boardConfiguration.FieldSizeY / 2.0)));
         }
 
-        public static Node GetLowerLeftNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetLowerLeftNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X - (Constants.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y - (Constants.FieldSizeY / 2.0)));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X - (_boardConfiguration.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y - (_boardConfiguration.FieldSizeY / 2.0)));
         }
-        public static Node GetUpperRightNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetUpperRightNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X + (Constants.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y + (Constants.FieldSizeY / 2.0)));
-        }
-
-        public static Node GetLowerRightNode(IEnumerable<Node> nodes, Node origin)
-        {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X + (Constants.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y - (Constants.FieldSizeY / 2.0)));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X + (_boardConfiguration.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y + (_boardConfiguration.FieldSizeY / 2.0)));
         }
 
-        public static IEnumerable<Node> GetLeftIntermediateBoundryNodes(IEnumerable<Node> nodes)
+        public  Node GetLowerRightNode(IEnumerable<Node> nodes, Node origin)
+        {
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X + (_boardConfiguration.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y - (_boardConfiguration.FieldSizeY / 2.0)));
+        }
+
+        public  IEnumerable<Node> GetLeftIntermediateBoundryNodes(IEnumerable<Node> nodes)
         {
             return nodes.Where(t => t.Name.StartsWith("LK") || t.Name.StartsWith("R")).ToList();
         }
 
-        public static IEnumerable<Node> GetRightIntermediateBoundryNodes(IEnumerable<Node> nodes)
+        public  IEnumerable<Node> GetRightIntermediateBoundryNodes(IEnumerable<Node> nodes)
         {
             return nodes.Where(t => t.Name.StartsWith("I") || t.Name.StartsWith("RI")).ToList();
         }
 
-        public static IEnumerable<Node> GetLeftCentralBoundryNodes(IEnumerable<Node> nodes)
+        public  IEnumerable<Node> GetLeftCentralBoundryNodes(IEnumerable<Node> nodes)
         {
             return nodes.Where(t => t.Name.StartsWith("LB") || t.Name.StartsWith("H")).ToList();
         }
 
-        public static IEnumerable<Node> GetRightCentralBoundryNodes(IEnumerable<Node> nodes)
+        public  IEnumerable<Node> GetRightCentralBoundryNodes(IEnumerable<Node> nodes)
         {
             return nodes.Where(t => t.Name.StartsWith("A") || t.Name.StartsWith("RA")).ToList();
         }
 
-        public static Node GetLeftCentralBoundryNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetLeftCentralBoundryNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X - Constants.FieldSizeX - Constants.SideFieldOffsetX) && t.Y.Equals(origin.Y));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X - _boardConfiguration.FieldSizeX - _boardConfiguration.SideFieldOffsetX) && t.Y.Equals(origin.Y));
         }
 
-        public static Node GetRightCentralBoundryNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetRightCentralBoundryNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X + Constants.FieldSizeX + Constants.SideFieldOffsetX) && t.Y.Equals(origin.Y));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X + _boardConfiguration.FieldSizeX + _boardConfiguration.SideFieldOffsetX) && t.Y.Equals(origin.Y));
         }
 
-        public static Node GetLeftIntermediateBoundryNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetLeftIntermediateBoundryNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X - Constants.SideFieldOffsetX) && t.Y.Equals(origin.Y));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X - _boardConfiguration.SideFieldOffsetX) && t.Y.Equals(origin.Y));
         }
 
-        public static Node GetRightIntermediateBoundryNode(IEnumerable<Node> nodes, Node origin)
+        public  Node GetRightIntermediateBoundryNode(IEnumerable<Node> nodes, Node origin)
         {
-            return nodes.FirstOrDefault(t => t.X.Equals(origin.X + Constants.SideFieldOffsetX) && t.Y.Equals(origin.Y));
+            return nodes.FirstOrDefault(t => t.X.Equals(origin.X + _boardConfiguration.SideFieldOffsetX) && t.Y.Equals(origin.Y));
         }
 
-        public static IEnumerable<Node> GetSetUpNodes(IEnumerable<Node> nodes)
+        public  IEnumerable<Node> GetSetUpNodes(IEnumerable<Node> nodes)
         {
             Regex regex = new Regex(@"[A-H]([1-2]|[7-8])");
             return nodes.Where(t => regex.Match(t.Name).Success).ToList();
         }
 
-        public static Node GetInitNode(IEnumerable<Node> nodes)
+        public  Node GetInitNode(IEnumerable<Node> nodes)
         {
             return nodes.FirstOrDefault(t => t.Name.Equals("LI0"));
         }

@@ -7,6 +7,13 @@ namespace GhostChess.Board.Configuration.Mappers
 {
     public class NodeMapper
     {
+        private readonly BoardConfiguration _boardConfiguration;
+
+        public NodeMapper(BoardConfiguration boardConfiguration)
+        {
+            _boardConfiguration = boardConfiguration;
+        }
+
         //TODO: v2 reinforce code to be independent of field sizes
         public IEnumerable<Node> Map()
         {
@@ -30,9 +37,9 @@ namespace GhostChess.Board.Configuration.Mappers
                     StringBuilder sb = new StringBuilder();
                     sb.Append(letter);
                     sb.Append(y);
-                    Node node = new Node(sb.ToString(), 
-                        Constants.CentralBoardZeroX + (x * Constants.FieldSizeX), 
-                        Constants.CentralBoardZeroY + (y * Constants.FieldSizeY));
+                    Node node = new Node(sb.ToString(),
+                        _boardConfiguration.CentralBoardZeroX + (x * _boardConfiguration.FieldSizeX), 
+                        _boardConfiguration.CentralBoardZeroY + (y * _boardConfiguration.FieldSizeY));
                     nodes.Add(node);
                 }
             }
@@ -50,8 +57,8 @@ namespace GhostChess.Board.Configuration.Mappers
                     sb.Append(letter);
                     sb.Append(y);
                     Node node = new Node(sb.ToString(),
-                        Constants.LeftBoardZeroX + (x * Constants.FieldSizeX),
-                        Constants.LeftBoardZeroY + (y * Constants.FieldSizeY));
+                        _boardConfiguration.LeftBoardZeroX + (x * _boardConfiguration.FieldSizeX),
+                        _boardConfiguration.LeftBoardZeroY + (y * _boardConfiguration.FieldSizeY));
                     nodes.Add(node);
                 }
             }
@@ -69,8 +76,8 @@ namespace GhostChess.Board.Configuration.Mappers
                     sb.Append(letter);
                     sb.Append(y);
                     Node node = new Node(sb.ToString(),
-                        Constants.RightBoardZeroX + (x * Constants.FieldSizeX),
-                        Constants.RightBoardZeroY + (y * Constants.FieldSizeY));
+                        _boardConfiguration.RightBoardZeroX + (x * _boardConfiguration.FieldSizeX),
+                        _boardConfiguration.RightBoardZeroY + (y * _boardConfiguration.FieldSizeY));
                     nodes.Add(node);
                 }
             }
@@ -87,8 +94,8 @@ namespace GhostChess.Board.Configuration.Mappers
                     sb.Append(letter);
                     sb.Append(y + 1);
                     Node node = new Node(sb.ToString(),
-                        Constants.CentralBoardZeroX + (x * Constants.FieldSizeX) + Constants.FieldSizeX / 2.0,
-                        Constants.CentralBoardZeroY + (y * Constants.FieldSizeY) + Constants.FieldSizeY / 2.0);
+                        _boardConfiguration.CentralBoardZeroX + (x * _boardConfiguration.FieldSizeX) + _boardConfiguration.FieldSizeX / 2.0,
+                        _boardConfiguration.CentralBoardZeroY + (y * _boardConfiguration.FieldSizeY) + _boardConfiguration.FieldSizeY / 2.0);
                     nodes.Add(node);
                 }
             }
@@ -106,8 +113,8 @@ namespace GhostChess.Board.Configuration.Mappers
                     sb.Append(letter);
                     sb.Append(y + 1);
                     Node node = new Node(sb.ToString(),
-                        Constants.LeftBoardZeroX + (x * Constants.FieldSizeX) + Constants.FieldSizeX / 2.0,
-                        Constants.LeftBoardZeroY + (y * Constants.FieldSizeY) + Constants.FieldSizeY / 2.0);
+                        _boardConfiguration.LeftBoardZeroX + (x * _boardConfiguration.FieldSizeX) + _boardConfiguration.FieldSizeX / 2.0,
+                        _boardConfiguration.LeftBoardZeroY + (y * _boardConfiguration.FieldSizeY) + _boardConfiguration.FieldSizeY / 2.0);
                     nodes.Add(node);
                 }
             }
@@ -125,8 +132,8 @@ namespace GhostChess.Board.Configuration.Mappers
                     sb.Append(letter);
                     sb.Append(y + 1);
                     Node node = new Node(sb.ToString(),
-                        Constants.RightBoardZeroX + (x * Constants.FieldSizeX) + Constants.FieldSizeX / 2.0,
-                        Constants.RightBoardZeroY + (y * Constants.FieldSizeY) + Constants.FieldSizeY / 2.0);
+                        _boardConfiguration.RightBoardZeroX + (x * _boardConfiguration.FieldSizeX) + _boardConfiguration.FieldSizeX / 2.0,
+                        _boardConfiguration.RightBoardZeroY + (y * _boardConfiguration.FieldSizeY) + _boardConfiguration.FieldSizeY / 2.0);
                     nodes.Add(node);
                 }
             }

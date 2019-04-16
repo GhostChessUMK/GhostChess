@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GhostChess.Board.Algorithms.Pathfinders;
-using static GhostChess.Board.Configuration.Constants;
+using GhostChess.Board.Abstractions.Pathfinders;
 
 namespace GhostChess.Board
 {
@@ -33,25 +33,53 @@ namespace GhostChess.Board
             }
 
             Console.WriteLine("Configuring board...");
-            Constants constants = new Constants(args.First(), 60, 20, 40, 40, 10, 0);
-            NodeMapper nodeMapper = new NodeMapper();
-            EdgeMapper edgeMapper = new EdgeMapper();
-            BreadthFirst pathfinder = new BreadthFirst();
+            var fieldSize = 40;
+            var boardZeroX = 60;
+            var boardZeroY = 20;
+            var sideFieldOffset = 10;
+            var boardConfiguration = new BoardConfiguration
+            {
+                LeftBoardZeroX = boardZeroX,
+                LeftBoardZeroY = boardZeroY,
+                FieldSizeX = fieldSize,
+                FieldSizeY = fieldSize,
+                SideFieldOffsetX = sideFieldOffset,
+                SideFieldOffsetY = 0,
+                CentralBoardZeroX = boardZeroX + 2 * fieldSize + sideFieldOffset,
+                CentralBoardZeroY = boardZeroY,
+                RightBoardZeroX = (boardZeroX + 2 * fieldSize + sideFieldOffset) + 8 * fieldSize + sideFieldOffset,
+                RightBoardZeroY = boardZeroY
+            };
 
-            Console.WriteLine("Registering nodes...");
-            var nodes = nodeMapper.Map();
+            var serialConfiguration = new SerialConfiguration
+            {
+                BaudRate = 115200,
+                SerialPortName = args.First()
+            };
 
-            Console.WriteLine("Registering edges...");
-            edgeMapper.Map(nodes);
+            var gpioConfiguration = new GpioConfiguration
+            {
+                Pin = RaspberryPi.Enums.Pins.Gpio3,
+                InputType = RaspberryPi.Enums.InputType.Output,
+                State = RaspberryPi.Enums.State.Low
+            };
+
+            var nodeHelper = new NodeHelper(boardConfiguration);
+            var nodeMapper = new NodeMapper(boardConfiguration);
+            var edgeMapper = new EdgeMapper(boardConfiguration, nodeHelper);
+            var configurationManager = new ConfigurationManager(nodeMapper, edgeMapper, boardConfiguration, serialConfiguration, gpioConfiguration);
+            IPathfinder pathfinder = new BreadthFirst();
+
+            Console.WriteLine("Registering nodes and edges...");
+            var nodes = configurationManager.MapBoard();
 
             Console.WriteLine("Configuring serial port...");
-            SerialPortStream serial = new SerialPortStream(SerialPortName, BaudRate);
+            var serial = configurationManager.InitializeSerialPort();
 
             Console.WriteLine("Configuring gpio pins...");
-            //Gpio gpio = new Gpio(RaspberryPi.Enums.Pins.Gpio3,
-            //    RaspberryPi.Enums.InputType.Output, RaspberryPi.Enums.State.Low);
-            Gpio gpio = new Gpio(RaspberryPi.Enums.Pins.Gpio3);
-            var controller = new Controller(gpio, serial, NodeHelper.GetInitNode(nodes));
+            var gpio = configurationManager.InitializeGpio();
+
+            var controller = new Controller(gpio, serial);
 
             Console.WriteLine("Initializing SingalR...");
             var connection = new HubConnectionBuilder()
@@ -61,7 +89,7 @@ namespace GhostChess.Board
             Console.WriteLine("Moving to zero...");
             byte[] buffer = new byte[1024];
             serial.Open();
-            while(true)
+            while (true)
             {
                 await serial.ReadAsync(buffer);
                 var response = System.Text.Encoding.Default.GetString(buffer);
@@ -69,10 +97,10 @@ namespace GhostChess.Board
                     break;
             }
             serial.DiscardOutBuffer();
-            controller.Move(LeftBoardZeroX, LeftBoardZeroY).Sleep(1000);
-                //.Sleep((int)(Vector.GetLength(LeftBoardZeroX, LeftBoardZeroY) * mmPerSec + AdditionalSecondSleep))
+            controller.Move(boardConfiguration.LeftBoardZeroX, boardConfiguration.LeftBoardZeroY).Sleep(1000);
+            //.Sleep((int)(Vector.GetLength(LeftBoardZeroX, LeftBoardZeroY) * mmPerSec + AdditionalSecondSleep))
             //serial.Close();
-            
+
             Console.WriteLine();
 
             var currentNode = nodes.First(t => t.Name.Equals("LI0"));
@@ -100,11 +128,11 @@ namespace GhostChess.Board
 
                     if (color == Abstractions.Enums.Colors.White)
                     {
-                        colorNodes = NodeHelper.GetLeftCentralNodes(nodes);
+                        colorNodes = nodeHelper.GetLeftCentralNodes(nodes);
                     }
                     else
                     {
-                        colorNodes = NodeHelper.GetRightCentralNodes(nodes);
+                        colorNodes = nodeHelper.GetRightCentralNodes(nodes);
                     }
 
                     foreach (var node in colorNodes)

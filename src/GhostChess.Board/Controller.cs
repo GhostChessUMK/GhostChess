@@ -16,13 +16,11 @@ namespace GhostChess.Board
         private Queue<ICommand> commandList;
         private SerialPortStream _serial;
         private Gpio _gpio;
-        private Node _currentNode;
 
-        public Controller(Gpio gpio, SerialPortStream serial, Node currentNode)
+        public Controller(Gpio gpio, SerialPortStream serial)
         {
             _gpio = gpio;
             _serial = serial;
-            _currentNode = currentNode;
             commandList = new Queue<ICommand>();
         }
 
