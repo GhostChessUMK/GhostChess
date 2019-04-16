@@ -1,12 +1,13 @@
-﻿using GhostChess.Board.Abstractions.Models;
+﻿using GhostChess.Board.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace GhostChess.Board.Abstractions.Helpers
+namespace GhostChess.Board.Configuration
 {
     public static class NodeHelper
     {
+        //TODO: Move to separate class with extension methods (Intermediate/Central), inject/return IEnumerable with nodes
         public static List<Node> GetRightCentralNodes(List<Node> nodes)
         {
             List<Node> rightNodes = new List<Node>();

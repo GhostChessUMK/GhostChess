@@ -15,6 +15,9 @@ namespace GhostChess.Board
 {
     class Program
     {
+        //TODO: Move to gamehandler class, create logger with console.writelines for more information and/or adding to file, (perhaps return stream)
+        //TODO: Template pattern (program flow), Initialize, Execute ^ (simmilar)
+        //TODO: Clean up SignalR, move parts of code to separate methods
         private const int ERROR_BAD_ARGUMENTS = 0xA0;
 
         public static async Task Main(string[] args)

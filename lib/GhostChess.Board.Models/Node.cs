@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace GhostChess.Board.Abstractions.Models
+namespace GhostChess.Board.Models
 {
     public class Node
     {
+        //TODO: Move to models
         public string Name { get; }
         public double X { get; }
         public double Y { get; }

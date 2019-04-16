@@ -4,8 +4,4 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GhostChess.Board.Models\GhostChess.Board.Models.csproj" />
-  </ItemGroup>
-
 </Project>

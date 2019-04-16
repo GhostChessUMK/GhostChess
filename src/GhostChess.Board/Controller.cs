@@ -56,6 +56,7 @@ namespace GhostChess.Board
             return this;
         }
 
+        //TODO: Remove
         public IController InitBoard(List<Node> nodes)
         {
             commandList.Enqueue(new InitBoardCommand(nodes));

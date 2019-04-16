@@ -10,6 +10,7 @@ namespace GhostChess.Board.Commands
 {
     public class InitBoardCommand : ICommand
     {
+        //TODO: Remove
         private readonly List<Node> _nodes;
 
         public InitBoardCommand(List<Node> nodes)

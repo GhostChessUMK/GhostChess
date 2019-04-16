@@ -1,9 +1,10 @@
 ﻿using System;
 
-namespace GhostChess.Board.Abstractions.Models
+namespace GhostChess.Board.Models
 {
     public class Vector
     {
+        //TODO: Move to models
         public double X { get; }
         public double Y { get; }
         public double Length { get; }

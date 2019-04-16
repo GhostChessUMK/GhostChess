@@ -4,13 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.28721.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7F9962A7-28AC-4AE8-9500-E337FDD2983B}"
-	ProjectSection(SolutionItems) = preProject
-		lib\GhostChess.Board.Abstractions\Constants.cs = lib\GhostChess.Board.Abstractions\Constants.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{DFA913EB-E7D9-414B-98C7-412F987B1D66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Console", "src\GhostChess.Console\GhostChess.Console.csproj", "{BDCF0CDA-FE2B-45A3-B09F-A3EF4A47E055}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Console.SignalR", "samples\GhostChess.Console.SignalR\GhostChess.Console.SignalR.csproj", "{BDCF0CDA-FE2B-45A3-B09F-A3EF4A47E055}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Web", "src\GhostChess.Web\GhostChess.Web.csproj", "{2051C439-42D8-4256-8FF6-B21654B497C4}"
 EndProject
@@ -19,6 +16,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.RaspberryPi", "lib\GhostChess.RaspberryPi\GhostChess.RaspberryPi.csproj", "{C99D46DC-3D0D-424C-A82F-9D3CAB2B36D7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Board.Abstractions", "lib\GhostChess.Board.Abstractions\GhostChess.Board.Abstractions.csproj", "{7BC78AAB-175E-494B-B3E1-DD8D9E370B08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Board.Configuration", "lib\GhostChess.Board.Configuration\GhostChess.Board.Configuration.csproj", "{1824A083-D799-4F14-B009-379C4FBDB4D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Board.Models", "lib\GhostChess.Board.Models\GhostChess.Board.Models.csproj", "{A2E326F0-3152-4350-ACD4-BD5A3D55A975}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Board.Algorithms", "lib\GhostChess.Board.Pathfinders\GhostChess.Board.Algorithms.csproj", "{7C65D58D-2759-44B8-877C-F226A087F82D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{2F5FB16E-0520-4016-927C-5B322802E5BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,16 +51,31 @@ Global
 		{7BC78AAB-175E-494B-B3E1-DD8D9E370B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BC78AAB-175E-494B-B3E1-DD8D9E370B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BC78AAB-175E-494B-B3E1-DD8D9E370B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1824A083-D799-4F14-B009-379C4FBDB4D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1824A083-D799-4F14-B009-379C4FBDB4D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1824A083-D799-4F14-B009-379C4FBDB4D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1824A083-D799-4F14-B009-379C4FBDB4D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E326F0-3152-4350-ACD4-BD5A3D55A975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E326F0-3152-4350-ACD4-BD5A3D55A975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E326F0-3152-4350-ACD4-BD5A3D55A975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E326F0-3152-4350-ACD4-BD5A3D55A975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C65D58D-2759-44B8-877C-F226A087F82D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C65D58D-2759-44B8-877C-F226A087F82D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C65D58D-2759-44B8-877C-F226A087F82D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C65D58D-2759-44B8-877C-F226A087F82D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BDCF0CDA-FE2B-45A3-B09F-A3EF4A47E055} = {7F9962A7-28AC-4AE8-9500-E337FDD2983B}
+		{BDCF0CDA-FE2B-45A3-B09F-A3EF4A47E055} = {2F5FB16E-0520-4016-927C-5B322802E5BE}
 		{2051C439-42D8-4256-8FF6-B21654B497C4} = {7F9962A7-28AC-4AE8-9500-E337FDD2983B}
 		{7553AF0A-557C-47CF-8CE1-E4353F201835} = {7F9962A7-28AC-4AE8-9500-E337FDD2983B}
 		{C99D46DC-3D0D-424C-A82F-9D3CAB2B36D7} = {DFA913EB-E7D9-414B-98C7-412F987B1D66}
 		{7BC78AAB-175E-494B-B3E1-DD8D9E370B08} = {DFA913EB-E7D9-414B-98C7-412F987B1D66}
+		{1824A083-D799-4F14-B009-379C4FBDB4D1} = {DFA913EB-E7D9-414B-98C7-412F987B1D66}
+		{A2E326F0-3152-4350-ACD4-BD5A3D55A975} = {DFA913EB-E7D9-414B-98C7-412F987B1D66}
+		{7C65D58D-2759-44B8-877C-F226A087F82D} = {DFA913EB-E7D9-414B-98C7-412F987B1D66}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3014D7CC-7EEA-435B-A2E8-9180403C8B82}

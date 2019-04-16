@@ -1,12 +1,13 @@
-﻿using GhostChess.Board.Abstractions.Helpers;
-using GhostChess.Board.Abstractions.Models;
+﻿using GhostChess.Board.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GhostChess.Board.Abstractions.Configuration
+namespace GhostChess.Board.Configuration.Mappers
 {
-    public class RegisterEdges
+    public class EdgeMapper
     {
+        //TODO: Move to separate lib, [configuration]
+        //TODO: v2 reinforce code to be independent of field sizes
         public void Register(List<Node> nodes)
         {
             RegisterCentralAndIntermediateEdges(nodes);

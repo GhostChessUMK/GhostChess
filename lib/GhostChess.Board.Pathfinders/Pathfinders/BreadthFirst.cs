@@ -1,11 +1,12 @@
-﻿using GhostChess.Board.Abstractions.Models;
+﻿using GhostChess.Board.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GhostChess.Board.Abstractions
+namespace GhostChess.Board.Algorithms.Pathfinders
 {
-    public class Pathfinder
+    public class BreadthFirst
     {
+        //TODO: Move to Core or separate lib, add IPathfinder, change class name to Breadth First, retrun IEnumerable
         public List<Node> FindPath(Node source, Node destination)
         {
             List<Node> visitedNodes = new List<Node>();
