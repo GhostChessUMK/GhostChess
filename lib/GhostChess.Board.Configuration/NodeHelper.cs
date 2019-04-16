@@ -52,7 +52,6 @@ namespace GhostChess.Board.Configuration
             return neighbouringNodes;
         }
 
-        //TODO: Check what it returns (is .ToList(); needed?)
         public static IEnumerable<Node> GetAllCentralNodes(IEnumerable<Node> nodes)
         {
             return nodes.Where(t =>
@@ -63,7 +62,8 @@ namespace GhostChess.Board.Configuration
                 t.Name.StartsWith("E") ||
                 t.Name.StartsWith("F") ||
                 t.Name.StartsWith("G") ||
-                t.Name.StartsWith("H"));
+                t.Name.StartsWith("H"))
+                .ToList();
         }
         public static Node GetLeftNode(IEnumerable<Node> nodes, Node origin)
         {
@@ -106,22 +106,22 @@ namespace GhostChess.Board.Configuration
 
         public static IEnumerable<Node> GetLeftIntermediateBoundryNodes(IEnumerable<Node> nodes)
         {
-            return nodes.Where(t => t.Name.StartsWith("LK") || t.Name.StartsWith("R"));
+            return nodes.Where(t => t.Name.StartsWith("LK") || t.Name.StartsWith("R")).ToList();
         }
 
         public static IEnumerable<Node> GetRightIntermediateBoundryNodes(IEnumerable<Node> nodes)
         {
-            return nodes.Where(t => t.Name.StartsWith("I") || t.Name.StartsWith("RI"));
+            return nodes.Where(t => t.Name.StartsWith("I") || t.Name.StartsWith("RI")).ToList();
         }
 
         public static IEnumerable<Node> GetLeftCentralBoundryNodes(IEnumerable<Node> nodes)
         {
-            return nodes.Where(t => t.Name.StartsWith("LB") || t.Name.StartsWith("H"));
+            return nodes.Where(t => t.Name.StartsWith("LB") || t.Name.StartsWith("H")).ToList();
         }
 
         public static IEnumerable<Node> GetRightCentralBoundryNodes(IEnumerable<Node> nodes)
         {
-            return nodes.Where(t => t.Name.StartsWith("A") || t.Name.StartsWith("RA"));
+            return nodes.Where(t => t.Name.StartsWith("A") || t.Name.StartsWith("RA")).ToList();
         }
 
         public static Node GetLeftCentralBoundryNode(IEnumerable<Node> nodes, Node origin)
@@ -147,7 +147,7 @@ namespace GhostChess.Board.Configuration
         public static IEnumerable<Node> GetSetUpNodes(IEnumerable<Node> nodes)
         {
             Regex regex = new Regex(@"[A-H]([1-2]|[7-8])");
-            return nodes.Where(t => regex.Match(t.Name).Success);
+            return nodes.Where(t => regex.Match(t.Name).Success).ToList();
         }
 
         public static Node GetInitNode(IEnumerable<Node> nodes)

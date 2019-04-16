@@ -43,7 +43,7 @@ namespace GhostChess.Board.Configuration.Mappers
                     t.Y.Equals(node.Y - (Constants.FieldSizeY))));
 
                 connectedNodes.RemoveAll(t => t == null);
-                node.ConnectedNodes = connectedNodes.Distinct();
+                node.ConnectedNodes = connectedNodes.Distinct().ToList();
             }
 
         }
@@ -58,7 +58,7 @@ namespace GhostChess.Board.Configuration.Mappers
                 }
 
                 node.ConnectedNodes = NodeHelper.GetNodesAround(nodes, node);
-                node.ConnectedNodes = node.ConnectedNodes.Distinct();
+                node.ConnectedNodes = node.ConnectedNodes.Distinct().ToList();
             }
         }
 
@@ -102,7 +102,7 @@ namespace GhostChess.Board.Configuration.Mappers
                 }
 
                 connectedNodes.Add(NodeHelper.GetRightIntermediateBoundryNode(nodes, node));
-                node.ConnectedNodes = node.ConnectedNodes.Distinct();
+                node.ConnectedNodes = connectedNodes.Distinct();
             }
 
             foreach (var node in rightIntermediateBoundryNodes)
@@ -114,7 +114,7 @@ namespace GhostChess.Board.Configuration.Mappers
                 }
 
                 connectedNodes.Add(NodeHelper.GetLeftIntermediateBoundryNode(nodes, node));
-                node.ConnectedNodes = node.ConnectedNodes.Distinct();
+                node.ConnectedNodes = connectedNodes.Distinct();
             }
         }        
     }
