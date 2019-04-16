@@ -20,29 +20,30 @@ namespace GhostChess.Board.Configuration.Mappers
 
             foreach(var node in centralNodes)
             {
-                if (node.ConnectedNodes == null)
+                List<Node> connectedNodes = new List<Node>();
+                if (node.ConnectedNodes != null)
                 {
-                    node.ConnectedNodes = new List<Node>();
+                    connectedNodes = node.ConnectedNodes.ToList();
                 }
 
-                node.ConnectedNodes.Add(nodes.FirstOrDefault(t => 
+                connectedNodes.Add(nodes.FirstOrDefault(t => 
                     t.X.Equals(node.X - (Constants.FieldSizeX)) && 
                     t.Y.Equals(node.Y + (Constants.FieldSizeY))));
 
-                node.ConnectedNodes.Add(nodes.FirstOrDefault(t =>
+                connectedNodes.Add(nodes.FirstOrDefault(t =>
                     t.X.Equals(node.X + (Constants.FieldSizeX)) &&
                     t.Y.Equals(node.Y + (Constants.FieldSizeY))));
 
-                node.ConnectedNodes.Add(nodes.FirstOrDefault(t =>
+                connectedNodes.Add(nodes.FirstOrDefault(t =>
                     t.X.Equals(node.X - (Constants.FieldSizeX)) &&
                     t.Y.Equals(node.Y - (Constants.FieldSizeY))));
 
-                node.ConnectedNodes.Add(nodes.FirstOrDefault(t =>
+                connectedNodes.Add(nodes.FirstOrDefault(t =>
                     t.X.Equals(node.X + (Constants.FieldSizeX)) &&
                     t.Y.Equals(node.Y - (Constants.FieldSizeY))));
 
-                node.ConnectedNodes.RemoveAll(t => t == null);
-                node.ConnectedNodes = node.ConnectedNodes.Distinct().ToList();
+                connectedNodes.RemoveAll(t => t == null);
+                node.ConnectedNodes = connectedNodes.Distinct();
             }
 
         }
@@ -57,7 +58,7 @@ namespace GhostChess.Board.Configuration.Mappers
                 }
 
                 node.ConnectedNodes = NodeHelper.GetNodesAround(nodes, node);
-                node.ConnectedNodes = node.ConnectedNodes.Distinct().ToList();
+                node.ConnectedNodes = node.ConnectedNodes.Distinct();
             }
         }
 
@@ -70,46 +71,50 @@ namespace GhostChess.Board.Configuration.Mappers
 
             foreach(var node in leftCentralBoundryNodes)
             {
-                if (node.ConnectedNodes == null)
+                List<Node> connectedNodes = new List<Node>();
+                if (node.ConnectedNodes != null)
                 {
-                    node.ConnectedNodes = new List<Node>();
+                    connectedNodes = node.ConnectedNodes.ToList();
                 }
 
-                node.ConnectedNodes.Add(NodeHelper.GetRightCentralBoundryNode(nodes, node));
-                node.ConnectedNodes = node.ConnectedNodes.Distinct().ToList();
+                connectedNodes.Add(NodeHelper.GetRightCentralBoundryNode(nodes, node));
+                node.ConnectedNodes = connectedNodes.Distinct();
             }
 
             foreach (var node in rightCentralBoundryNodes)
             {
-                if (node.ConnectedNodes == null)
+                List<Node> connectedNodes = new List<Node>();
+                if (node.ConnectedNodes != null)
                 {
-                    node.ConnectedNodes = new List<Node>();
+                    connectedNodes = node.ConnectedNodes.ToList();
                 }
 
-                node.ConnectedNodes.Add(NodeHelper.GetLeftCentralBoundryNode(nodes, node));
-                node.ConnectedNodes = node.ConnectedNodes.Distinct().ToList();
+                connectedNodes.Add(NodeHelper.GetLeftCentralBoundryNode(nodes, node));
+                node.ConnectedNodes = connectedNodes.Distinct();
             }
 
             foreach (var node in leftIntermediateBoundryNodes)
             {
-                if (node.ConnectedNodes == null)
+                List<Node> connectedNodes = new List<Node>();
+                if (node.ConnectedNodes != null)
                 {
-                    node.ConnectedNodes = new List<Node>();
+                    connectedNodes = node.ConnectedNodes.ToList();
                 }
 
-                node.ConnectedNodes.Add(NodeHelper.GetRightIntermediateBoundryNode(nodes, node));
-                node.ConnectedNodes = node.ConnectedNodes.Distinct().ToList();
+                connectedNodes.Add(NodeHelper.GetRightIntermediateBoundryNode(nodes, node));
+                node.ConnectedNodes = node.ConnectedNodes.Distinct();
             }
 
             foreach (var node in rightIntermediateBoundryNodes)
             {
-                if (node.ConnectedNodes == null)
+                List<Node> connectedNodes = new List<Node>();
+                if (node.ConnectedNodes != null)
                 {
-                    node.ConnectedNodes = new List<Node>();
+                    connectedNodes = node.ConnectedNodes.ToList();
                 }
 
-                node.ConnectedNodes.Add(NodeHelper.GetLeftIntermediateBoundryNode(nodes, node));
-                node.ConnectedNodes = node.ConnectedNodes.Distinct().ToList();
+                connectedNodes.Add(NodeHelper.GetLeftIntermediateBoundryNode(nodes, node));
+                node.ConnectedNodes = node.ConnectedNodes.Distinct();
             }
         }        
     }

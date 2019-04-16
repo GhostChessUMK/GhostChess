@@ -8,6 +8,7 @@ namespace GhostChess.Board.Configuration
     public static class NodeHelper
     {
         //TODO: Move to separate class with extension methods (Intermediate/Central)
+        //TODO: Add Regex to searches
         public static IEnumerable<Node> GetRightCentralNodes(IEnumerable<Node> nodes)
         {
             List<Node> rightNodes = new List<Node>();
@@ -51,9 +52,10 @@ namespace GhostChess.Board.Configuration
             return neighbouringNodes;
         }
 
+        //TODO: Check what it returns (is .ToList(); needed?)
         public static IEnumerable<Node> GetAllCentralNodes(IEnumerable<Node> nodes)
         {
-            return nodes.FindAll(t =>
+            return nodes.Where(t =>
                 t.Name.StartsWith("A") ||
                 t.Name.StartsWith("B") ||
                 t.Name.StartsWith("C") ||
@@ -102,24 +104,24 @@ namespace GhostChess.Board.Configuration
             return nodes.FirstOrDefault(t => t.X.Equals(origin.X + (Constants.FieldSizeX / 2.0)) && t.Y.Equals(origin.Y - (Constants.FieldSizeY / 2.0)));
         }
 
-        public static List<Node> GetLeftIntermediateBoundryNodes(IEnumerable<Node> nodes)
+        public static IEnumerable<Node> GetLeftIntermediateBoundryNodes(IEnumerable<Node> nodes)
         {
-            return nodes.FindAll(t => t.Name.StartsWith("LK") || t.Name.StartsWith("R"));
+            return nodes.Where(t => t.Name.StartsWith("LK") || t.Name.StartsWith("R"));
         }
 
-        public static List<Node> GetRightIntermediateBoundryNodes(IEnumerable<Node> nodes)
+        public static IEnumerable<Node> GetRightIntermediateBoundryNodes(IEnumerable<Node> nodes)
         {
-            return nodes.FindAll(t => t.Name.StartsWith("I") || t.Name.StartsWith("RI"));
+            return nodes.Where(t => t.Name.StartsWith("I") || t.Name.StartsWith("RI"));
         }
 
-        public static List<Node> GetLeftCentralBoundryNodes(IEnumerable<Node> nodes)
+        public static IEnumerable<Node> GetLeftCentralBoundryNodes(IEnumerable<Node> nodes)
         {
-            return nodes.FindAll(t => t.Name.StartsWith("LB") || t.Name.StartsWith("H"));
+            return nodes.Where(t => t.Name.StartsWith("LB") || t.Name.StartsWith("H"));
         }
 
-        public static List<Node> GetRightCentralBoundryNodes(IEnumerable<Node> nodes)
+        public static IEnumerable<Node> GetRightCentralBoundryNodes(IEnumerable<Node> nodes)
         {
-            return nodes.FindAll(t => t.Name.StartsWith("A") || t.Name.StartsWith("RA"));
+            return nodes.Where(t => t.Name.StartsWith("A") || t.Name.StartsWith("RA"));
         }
 
         public static Node GetLeftCentralBoundryNode(IEnumerable<Node> nodes, Node origin)
@@ -145,7 +147,7 @@ namespace GhostChess.Board.Configuration
         public static IEnumerable<Node> GetSetUpNodes(IEnumerable<Node> nodes)
         {
             Regex regex = new Regex(@"[A-H]([1-2]|[7-8])");
-            return nodes.FindAll(t => regex.Match(t.Name).Success);
+            return nodes.Where(t => regex.Match(t.Name).Success);
         }
 
         public static Node GetInitNode(IEnumerable<Node> nodes)
