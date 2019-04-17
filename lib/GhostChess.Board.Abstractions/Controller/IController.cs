@@ -1,4 +1,4 @@
-﻿using GhostChess.Board.Models;
+﻿using GhostChess.Board.Core.Models;
 using System.Threading.Tasks;
 
 namespace GhostChess.Board.Abstractions.Controller

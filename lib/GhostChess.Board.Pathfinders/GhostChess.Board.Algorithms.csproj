@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GhostChess.Board.Abstractions\GhostChess.Board.Abstractions.csproj" />
-    <ProjectReference Include="..\GhostChess.Board.Models\GhostChess.Board.Models.csproj" />
   </ItemGroup>
 
 </Project>

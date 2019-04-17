@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GhostChess.Board.Configuration
+namespace GhostChess.Board.Core.Configuration
 {
     public class SerialConfiguration
     {

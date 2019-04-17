@@ -1,5 +1,5 @@
 ﻿using GhostChess.Board.Abstractions.Pathfinders;
-using GhostChess.Board.Models;
+using GhostChess.Board.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 

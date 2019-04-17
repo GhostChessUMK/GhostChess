@@ -1,4 +1,5 @@
-﻿using GhostChess.Board.Models;
+﻿using GhostChess.Board.Core.Configuration;
+using GhostChess.Board.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,24 +9,26 @@ namespace GhostChess.Board.Configuration.Mappers
     {
         private readonly BoardConfiguration _boardConfiguration;
         private readonly NodeHelper _nodeHelper;
+        private readonly Nodes _nodes;
 
-        public EdgeMapper(BoardConfiguration boardConfiguration, NodeHelper nodeHelper)
+        public EdgeMapper(BoardConfiguration boardConfiguration, NodeHelper nodeHelper, Nodes nodes)
         {
             _boardConfiguration = boardConfiguration;
             _nodeHelper = nodeHelper;
+            _nodes = nodes;
         }
 
         //TODO: v2 reinforce code to be independent of field sizes
-        public void Map(IEnumerable<Node> nodes)
+        public void Map()
         {
-            MapCentralAndIntermediateEdges(nodes);
-            MapAdditionalCentralEdges(nodes);
-            MapBoundryEdges(nodes);
+            MapCentralAndIntermediateEdges();
+            MapAdditionalCentralEdges();
+            MapBoundryEdges();
         }
 
-        private void MapAdditionalCentralEdges(IEnumerable<Node> nodes)
+        private void MapAdditionalCentralEdges()
         {
-            IEnumerable<Node> centralNodes = _nodeHelper.GetAllCentralNodes(nodes);
+            var centralNodes = _nodes.GetAllCentralNodes();
 
             foreach(var node in centralNodes)
             {
@@ -35,19 +38,19 @@ namespace GhostChess.Board.Configuration.Mappers
                     connectedNodes = node.ConnectedNodes.ToList();
                 }
 
-                connectedNodes.Add(nodes.FirstOrDefault(t => 
+                connectedNodes.Add(_nodes.FirstOrDefault(t => 
                     t.X.Equals(node.X - (_boardConfiguration.FieldSizeX)) && 
                     t.Y.Equals(node.Y + (_boardConfiguration.FieldSizeY))));
 
-                connectedNodes.Add(nodes.FirstOrDefault(t =>
+                connectedNodes.Add(_nodes.FirstOrDefault(t =>
                     t.X.Equals(node.X + (_boardConfiguration.FieldSizeX)) &&
                     t.Y.Equals(node.Y + (_boardConfiguration.FieldSizeY))));
 
-                connectedNodes.Add(nodes.FirstOrDefault(t =>
+                connectedNodes.Add(_nodes.FirstOrDefault(t =>
                     t.X.Equals(node.X - (_boardConfiguration.FieldSizeX)) &&
                     t.Y.Equals(node.Y - (_boardConfiguration.FieldSizeY))));
 
-                connectedNodes.Add(nodes.FirstOrDefault(t =>
+                connectedNodes.Add(_nodes.FirstOrDefault(t =>
                     t.X.Equals(node.X + (_boardConfiguration.FieldSizeX)) &&
                     t.Y.Equals(node.Y - (_boardConfiguration.FieldSizeY))));
 
@@ -57,26 +60,22 @@ namespace GhostChess.Board.Configuration.Mappers
 
         }
 
-        private void MapCentralAndIntermediateEdges(IEnumerable<Node> nodes)
+        private void MapCentralAndIntermediateEdges()
         {
-            foreach(var node in nodes)
+            foreach(var node in _nodes)
             {
-                if(node.ConnectedNodes == null)
-                {
-                    node.ConnectedNodes = new List<Node>();
-                }
-
-                node.ConnectedNodes = _nodeHelper.GetNodesAround(nodes, node);
-                node.ConnectedNodes = node.ConnectedNodes.Distinct().ToList();
+                var connectedNodes = node.ConnectedNodes.ToList() ?? new List<Node>();
+                connectedNodes.AddRange(_nodes.GetNodesAround(node));
+                node.ConnectedNodes = connectedNodes.Distinct().ToList();
             }
         }
 
-        private void MapBoundryEdges(IEnumerable<Node> nodes)
+        private void MapBoundryEdges()
         {
-            var leftCentralBoundryNodes = _nodeHelper.GetLeftCentralBoundryNodes(nodes);
-            var rightCentralBoundryNodes = _nodeHelper.GetRightCentralBoundryNodes(nodes);
-            var leftIntermediateBoundryNodes = _nodeHelper.GetLeftIntermediateBoundryNodes(nodes);
-            var rightIntermediateBoundryNodes = _nodeHelper.GetRightIntermediateBoundryNodes(nodes);
+            var leftCentralBoundryNodes = _nodes.GetLeftCentralBoundryNodes();
+            var rightCentralBoundryNodes = _nodes.GetRightCentralBoundryNodes();
+            var leftIntermediateBoundryNodes = _nodes.GetLeftIntermediateBoundryNodes();
+            var rightIntermediateBoundryNodes = _nodes.GetRightIntermediateBoundryNodes();
 
             foreach(var node in leftCentralBoundryNodes)
             {
@@ -86,7 +85,7 @@ namespace GhostChess.Board.Configuration.Mappers
                     connectedNodes = node.ConnectedNodes.ToList();
                 }
 
-                connectedNodes.Add(_nodeHelper.GetRightCentralBoundryNode(nodes, node));
+                connectedNodes.Add(_nodes.GetRightCentralBoundryNode(node));
                 node.ConnectedNodes = connectedNodes.Distinct();
             }
 
@@ -98,7 +97,7 @@ namespace GhostChess.Board.Configuration.Mappers
                     connectedNodes = node.ConnectedNodes.ToList();
                 }
 
-                connectedNodes.Add(_nodeHelper.GetLeftCentralBoundryNode(nodes, node));
+                connectedNodes.Add(_nodes.GetLeftCentralBoundryNode(node));
                 node.ConnectedNodes = connectedNodes.Distinct();
             }
 
@@ -110,7 +109,7 @@ namespace GhostChess.Board.Configuration.Mappers
                     connectedNodes = node.ConnectedNodes.ToList();
                 }
 
-                connectedNodes.Add(_nodeHelper.GetRightIntermediateBoundryNode(nodes, node));
+                connectedNodes.Add(_nodes.GetRightIntermediateBoundryNode(node));
                 node.ConnectedNodes = connectedNodes.Distinct();
             }
 
@@ -122,7 +121,7 @@ namespace GhostChess.Board.Configuration.Mappers
                     connectedNodes = node.ConnectedNodes.ToList();
                 }
 
-                connectedNodes.Add(_nodeHelper.GetLeftIntermediateBoundryNode(nodes, node));
+                connectedNodes.Add(_nodes.GetLeftIntermediateBoundryNode(node));
                 node.ConnectedNodes = connectedNodes.Distinct();
             }
         }        

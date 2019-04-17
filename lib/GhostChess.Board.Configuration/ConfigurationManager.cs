@@ -1,6 +1,7 @@
 ﻿using GhostChess.Board.Abstractions.Configuration;
 using GhostChess.Board.Configuration.Mappers;
-using GhostChess.Board.Models;
+using GhostChess.Board.Core.Configuration;
+using GhostChess.Board.Core.Models;
 using GhostChess.RaspberryPi;
 using RJCP.IO.Ports;
 using System;

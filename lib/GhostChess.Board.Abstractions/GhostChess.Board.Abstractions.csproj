@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GhostChess.Board.Models\GhostChess.Board.Models.csproj" />
+    <PackageReference Include="SerialPortStream" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GhostChess.Board.Core\GhostChess.Board.Core.csproj" />
   </ItemGroup>
 
 </Project>
