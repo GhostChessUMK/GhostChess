@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Board.Abstractio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Board.Configuration", "lib\GhostChess.Board.Configuration\GhostChess.Board.Configuration.csproj", "{1824A083-D799-4F14-B009-379C4FBDB4D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Board.Algorithms", "lib\GhostChess.Board.Pathfinders\GhostChess.Board.Algorithms.csproj", "{7C65D58D-2759-44B8-877C-F226A087F82D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostChess.Board.Algorithms", "lib\GhostChess.Board.Algorithms\GhostChess.Board.Algorithms.csproj", "{7C65D58D-2759-44B8-877C-F226A087F82D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{2F5FB16E-0520-4016-927C-5B322802E5BE}"
 EndProject
