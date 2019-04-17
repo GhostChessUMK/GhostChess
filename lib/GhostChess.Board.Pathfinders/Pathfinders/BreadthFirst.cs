@@ -25,7 +25,7 @@ namespace GhostChess.Board.Algorithms.Pathfinders
                     return currentPath;
                 }
 
-                foreach (var node in lastNode.ConnectedNodes.Where(t => t != null && t.isEmpty == true))
+                foreach (var node in lastNode.ConnectedNodes.Where(t => t != null && t.IsEmpty == true))
                 {
                     if (visitedNodes.Contains(node) == false)
                     {

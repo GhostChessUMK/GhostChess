@@ -14,9 +14,9 @@ namespace GhostChess.Board.Configuration
     {
         private readonly NodeMapper _nodeMapper;
         private readonly EdgeMapper _edgeMapper;
-        private readonly BoardConfiguration _boardConfiguration;
-        private readonly SerialConfiguration _serialConfiguration;
-        private readonly GpioConfiguration _gpioConfiguration;
+        public BoardConfiguration BoardConfiguration { get; }
+        public SerialConfiguration SerialConfiguration { get; }
+        public GpioConfiguration GpioConfiguration { get; }
 
         public ConfigurationManager(NodeMapper nodeMapper, EdgeMapper edgeMapper, BoardConfiguration boardConfiguration, 
             SerialConfiguration serialConfiguration, GpioConfiguration gpioConfiguration)
@@ -24,26 +24,26 @@ namespace GhostChess.Board.Configuration
             _nodeMapper = nodeMapper;
             _edgeMapper = edgeMapper;
 
-            _boardConfiguration = boardConfiguration;
-            _serialConfiguration = serialConfiguration;
-            _gpioConfiguration = gpioConfiguration;
+            BoardConfiguration = boardConfiguration;
+            SerialConfiguration = serialConfiguration;
+            GpioConfiguration = gpioConfiguration;
         }
 
         public IEnumerable<Node> MapBoard()
         {
-            List<Node> nodes = _nodeMapper.Map().ToList();
+            var nodes = _nodeMapper.Map();
             _edgeMapper.Map(nodes);
             return nodes;
         }
 
         public SerialPortStream InitializeSerialPort()
         {
-            return new SerialPortStream(_serialConfiguration.SerialPortName, _serialConfiguration.BaudRate);
+            return new SerialPortStream(SerialConfiguration.SerialPortName, SerialConfiguration.BaudRate);
         }
 
         public Gpio InitializeGpio()
         {
-            return new Gpio(_gpioConfiguration.Pin, _gpioConfiguration.InputType, _gpioConfiguration.State);
+            return new Gpio(GpioConfiguration.Pin, GpioConfiguration.InputType, GpioConfiguration.State);
         }
     }
 }

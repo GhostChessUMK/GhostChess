@@ -1,13 +1,13 @@
 ﻿using GhostChess.Board.Abstractions.Commands;
 using GhostChess.Board.Abstractions.Controller;
 using GhostChess.Board.Configuration;
-using GhostChess.Board.Models;
 using GhostChess.Board.Commands;
 using GhostChess.RaspberryPi;
 using RJCP.IO.Ports;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using GhostChess.Board.Core.Models;
 
 namespace GhostChess.Board
 {

@@ -9,6 +9,8 @@ namespace GhostChess.Board.Core.Models
 {
     public class Nodes : List<Node>
     {
+        //TODO: v2 possibly implement methods as extensions to IEnumerable<T>
+        //TODO: v2 reinforce to find by relative node names instead of fixed sizes
 
         private readonly BoardConfiguration _boardConfiguration;
 
