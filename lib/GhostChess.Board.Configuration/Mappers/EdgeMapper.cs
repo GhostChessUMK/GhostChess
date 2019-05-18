@@ -60,7 +60,11 @@ namespace GhostChess.Board.Configuration.Mappers
         {
             foreach(var node in nodes)
             {
-                var connectedNodes = node.ConnectedNodes.ToList() ?? new List<Node>();
+                var connectedNodes = new List<Node>();
+                if(node.ConnectedNodes != null)
+                {
+                    connectedNodes = node.ConnectedNodes.ToList();
+                }
                 connectedNodes.AddRange(nodes.GetNodesAround(node));
                 node.ConnectedNodes = connectedNodes.Distinct().ToList();
             }

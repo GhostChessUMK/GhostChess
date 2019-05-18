@@ -5,7 +5,6 @@ namespace GhostChess.Console.SignalR
 {
     public class Program
     {
-        //TODO: Move to samples, change name to SignalR connection
         public static HubConnection connection;
 
         public static async Task Main(string[] args)

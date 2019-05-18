@@ -44,6 +44,7 @@ namespace GhostChess.Board.Configuration
         public Gpio InitializeGpio()
         {
             return new Gpio(GpioConfiguration.Pin, GpioConfiguration.InputType, GpioConfiguration.State);
+            //return new Gpio(GpioConfiguration.Pin);
         }
     }
 }

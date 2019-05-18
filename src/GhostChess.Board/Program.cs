@@ -81,10 +81,9 @@ namespace GhostChess.Board
 
             var gameHandler = new GameHandler(nodes, gpio, serial, controller, pathfinder, configurationManager, connection);
 
-            await Task.Factory.StartNew(controller.Run, TaskCreationOptions.LongRunning);
+            Task.Factory.StartNew(controller.Run, TaskCreationOptions.LongRunning);
             await Task.Factory.StartNew(gameHandler.Run, TaskCreationOptions.LongRunning);    
-
-            await connection.StartAsync();
+            
             await Task.Delay(-1);
         }
     }
