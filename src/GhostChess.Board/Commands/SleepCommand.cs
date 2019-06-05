@@ -16,7 +16,7 @@ namespace GhostChess.Board.Commands
 
         public async Task Execute()
         {
-            Console.WriteLine($"Sleeping for {_miliseconds} ms");
+            Logger.Log($"Sleeping for {_miliseconds} ms");
             Thread.Sleep(_miliseconds);
         }
     }

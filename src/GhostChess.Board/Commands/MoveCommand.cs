@@ -34,15 +34,18 @@ namespace GhostChess.Board.Commands
         {
             if (_source != null || _destination != null)
             {
-                Console.WriteLine($"Moving: {_source.Name} -> {_destination.Name}");
+                Logger.Log($"Moving: {_source.Name} -> {_destination.Name}");
             }
             else
             {
-                Console.WriteLine($"Moving: {_x} -> {_y}");
+                Logger.Log($"Moving: {_x} -> {_y}");
             }
-
-            _serial.WriteLine($"G00 X{_x} Y{_y}");
-            await MoveFinished();
+            
+            if(_x != 0 || _y != 0)
+            {
+                _serial.WriteLine($"G00 X{_x} Y{_y}");
+                await MoveFinished();
+            }          
         }
 
         private async Task MoveFinished()
@@ -56,7 +59,7 @@ namespace GhostChess.Board.Commands
                 {
                     _serial.DiscardOutBuffer();
                     return;
-                }                    
+                }
             }
         }
 

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using GhostChess.Board.Core.Models;
+using System;
 
 namespace GhostChess.Board
 {
@@ -56,13 +57,16 @@ namespace GhostChess.Board
 
         public async Task Run()
         {
-            while(true)
-            {   
+            Logger.Log("Awaiting commands...");
+            Logger.Log($"Enqueued commands: {commandList.Count}");
+            while (true)
+            {
                 if(commandList.TryDequeue(out var command))
                 {
+                    Logger.Log($"Enqueued commands: {commandList.Count}");
                     await command.Execute();
-                    //Thread.Sleep(500);
                 }
+                await Task.Delay(250);
             }
         }
     }

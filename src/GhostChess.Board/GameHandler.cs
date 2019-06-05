@@ -1,4 +1,5 @@
-﻿using GhostChess.Board.Abstractions.Configuration;
+﻿using GhostChess.Board.Abstractions;
+using GhostChess.Board.Abstractions.Configuration;
 using GhostChess.Board.Abstractions.Controller;
 using GhostChess.Board.Abstractions.Pathfinders;
 using GhostChess.Board.Core.Models;
@@ -39,12 +40,13 @@ namespace GhostChess.Board
 
         public async Task Run()
         {
-            await SerialOpen();
+            await SerialOpen();            
             MoveToZero();
-
+            var color = Colors.White;
+            
             _connection.On<string, string>("Move", (source, destination) =>
             {
-                var color = Colors.White;              
+                Logger.Log("New move!");     
                 var sourceNode = GetNodeByName(source);
                 var destinationNode = GetNodeByName(destination);
 
@@ -53,9 +55,11 @@ namespace GhostChess.Board
                     RemovePiece(destinationNode, color);
                 }
                 MovePiece(sourceNode, destinationNode);
+                color = InvertColor(color);
             });
 
             await _connection.StartAsync();
+            Logger.Log("Awaiting players...");
             await Task.Delay(-1);
         }
 
@@ -68,6 +72,8 @@ namespace GhostChess.Board
             destination.IsEmpty = false;
             source.IsEmpty = true;
         }
+
+        private Colors InvertColor(Colors color) => (color == Colors.White) ? Colors.Black : Colors.White;
 
         private void RemovePiece(Node node, Colors color) => MovePiece(node, GetFreeSideNode(color));
        
@@ -91,6 +97,7 @@ namespace GhostChess.Board
 
         private void MoveToZero()
         {
+            Logger.Log("Moving to zero...");
             _controller.Move(_configurationManager.BoardConfiguration.LeftBoardZeroX, 
                 _configurationManager.BoardConfiguration.LeftBoardZeroY)
                 .Sleep(1000);
@@ -99,14 +106,23 @@ namespace GhostChess.Board
 
         private async Task SerialOpen()
         {
-            byte[] buffer = new byte[128];
-            _serial.Open();
+            byte[] buffer = new byte[128];          
+            if (_serial.IsOpen == false)
+            {
+                Logger.Log("Opening serial port...");
+                _serial.Open();
+            }
+            Logger.Log("Awaiting handshake...");
             while (true)
             {
                 await _serial.ReadAsync(buffer);
                 var response = System.Text.Encoding.Default.GetString(buffer);
                 if (response.Contains("start"))
+                {
+                    Logger.Log("Handshake successful...");
                     break;
+                }
+                await Task.Delay(250);
             }
             _serial.DiscardOutBuffer();
         }

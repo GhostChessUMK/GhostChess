@@ -16,7 +16,7 @@ namespace GhostChess.Board.Commands
 
         public async Task Execute()
         {
-            Console.WriteLine("Magnet is off");
+            Logger.Log("Magnet is off");
             _gpio.SetState(Enums.State.Low);
         }
     }

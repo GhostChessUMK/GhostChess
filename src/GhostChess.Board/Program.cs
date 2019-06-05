@@ -18,7 +18,7 @@ namespace GhostChess.Board
 {
     class Program
     {
-        //TODO: Move to gamehandler class, create logger with console.writelines for more information and/or adding to file, (perhaps return stream)
+        //TODO: Move to gamehandler class, create logger with Logger.Logs for more information and/or adding to file, (perhaps return stream)
         //TODO: Template pattern (program flow), Initialize, Execute ^ (simmilar)
         //TODO: Clean up SignalR, move parts of code to separate methods
         private const int ERROR_BAD_ARGUMENTS = 0xA0;
@@ -27,13 +27,13 @@ namespace GhostChess.Board
         {
             if (args.Count().Equals(0))
             {
-                Console.WriteLine("Error! Put serial port name in arguments ex.");
-                Console.WriteLine("sudo dotnet GhostChess.Board.dll /dev/ttyUSB0");
-                Console.WriteLine("./run.sh /dev/ttyUSB0");
+                Logger.Log("Error! Put serial port name in arguments ex.");
+                Logger.Log("sudo dotnet GhostChess.Board.dll /dev/ttyUSB0");
+                Logger.Log("./run.sh /dev/ttyUSB0");
                 Environment.Exit(ERROR_BAD_ARGUMENTS);
             }
 
-            Console.WriteLine("Configuring board...");
+            Logger.Log("Configuring board...");
             var fieldSize = 40;
             var boardZeroX = 60;
             var boardZeroY = 20;
@@ -52,19 +52,22 @@ namespace GhostChess.Board
                 RightBoardZeroY = boardZeroY
             };
 
+            Logger.Log("Configuring serial port...");
             var serialConfiguration = new SerialConfiguration
             {
                 BaudRate = 115200,
                 SerialPortName = args.First()
             };
 
+            Logger.Log("Configuring GPIO...");
             var gpioConfiguration = new GpioConfiguration
             {
-                Pin = RaspberryPi.Enums.Pins.Gpio3,
+                Pin = RaspberryPi.Enums.Pins.Gpio14,
                 InputType = RaspberryPi.Enums.InputType.Output,
                 State = RaspberryPi.Enums.State.Low
             };
 
+            Logger.Log("Initializing board...");
             var pathfinder = new BreadthFirst();
             var nodeMapper = new NodeMapper(boardConfiguration);
             var edgeMapper = new EdgeMapper(boardConfiguration);
@@ -74,6 +77,7 @@ namespace GhostChess.Board
             var gpio = configurationManager.InitializeGpio();
             var serial = configurationManager.InitializeSerialPort();
 
+            Logger.Log("Configuring connection...");
             var controller = new Controller(gpio, serial);
             var connection = new HubConnectionBuilder()
               .WithUrl("https://ghostchessweb.azurewebsites.net/chess?Password=P@ssw0rd&Board=true")
@@ -81,8 +85,9 @@ namespace GhostChess.Board
 
             var gameHandler = new GameHandler(nodes, gpio, serial, controller, pathfinder, configurationManager, connection);
 
-            Task.Factory.StartNew(controller.Run, TaskCreationOptions.LongRunning);
-            await Task.Factory.StartNew(gameHandler.Run, TaskCreationOptions.LongRunning);    
+            Logger.Log("Starting game...");
+            _ = Task.Factory.StartNew(controller.Run, TaskCreationOptions.LongRunning);
+            _ = Task.Factory.StartNew(gameHandler.Run, TaskCreationOptions.LongRunning);    
             
             await Task.Delay(-1);
         }
