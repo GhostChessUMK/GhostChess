@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace GhostChess.Board.Abstractions.Models
+namespace GhostChess.Board.Core.Models
 {
     public class Node
     {
@@ -10,16 +8,16 @@ namespace GhostChess.Board.Abstractions.Models
         public double X { get; }
         public double Y { get; }
 
-        public bool isEmpty { get; set; }
+        public bool IsEmpty { get; set; }
 
         public Node(string name, double x, double y)
         {
             Name = name;
             X = x;
             Y = y;
-            isEmpty = true;
+            IsEmpty = true;
         }
 
-        public List<Node> ConnectedNodes { get; set; }
+        public IEnumerable<Node> ConnectedNodes { get; set; }
     }
 }

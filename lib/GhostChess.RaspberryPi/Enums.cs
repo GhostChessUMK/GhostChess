@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GhostChess.RaspberryPi
+﻿namespace GhostChess.RaspberryPi
 {
     public static class Enums
     {

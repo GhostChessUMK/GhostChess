@@ -1,8 +1,7 @@
 ﻿using GhostChess.Board.Abstractions.Commands;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace GhostChess.Board.Commands
 {
@@ -15,9 +14,9 @@ namespace GhostChess.Board.Commands
             _miliseconds = miliseconds;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
-            Console.WriteLine($"Sleeping for {_miliseconds} ms");
+            Logger.Log($"Sleeping for {_miliseconds} ms");
             Thread.Sleep(_miliseconds);
         }
     }

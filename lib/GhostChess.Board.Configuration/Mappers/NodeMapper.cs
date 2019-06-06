@@ -1,25 +1,34 @@
-﻿using GhostChess.Board.Abstractions.Models;
-using System;
+﻿using GhostChess.Board.Abstractions;
+using GhostChess.Board.Core.Configuration;
+using GhostChess.Board.Core.Models;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GhostChess.Board.Abstractions.Configuration
+namespace GhostChess.Board.Configuration.Mappers
 {
-    public class RegisterNodes
+    public class NodeMapper
     {
-        public List<Node> Register()
+        private readonly BoardConfiguration _boardConfiguration;
+
+        public NodeMapper(BoardConfiguration boardConfiguration)
         {
-            List<Node> nodes = new List<Node>();
-            RegisterCentralBoardNodes(nodes);
-            RegisterCentralIntermediateNodes(nodes);
-            RegisterLeftBoardNodes(nodes);
-            RegisterLeftIntermediateNodes(nodes);
-            RegisterRightBoardNodes(nodes);
-            RegisterRightIntermediateNodes(nodes);
+            _boardConfiguration = boardConfiguration;
+        }
+
+        //TODO: v2 reinforce code to be independent of field sizes
+        public Nodes Map()
+        {
+            var nodes = new Nodes(_boardConfiguration);
+            MapCentralBoardNodes(nodes);
+            MapCentralIntermediateNodes(nodes);
+            MapLeftBoardNodes(nodes);
+            MapLeftIntermediateNodes(nodes);
+            MapRightBoardNodes(nodes);
+            MapRightIntermediateNodes(nodes);
             return nodes;
         }
 
-        private void RegisterCentralIntermediateNodes(List<Node> nodes)
+        private void MapCentralIntermediateNodes(Nodes nodes)
         {
             for(int x = 0; x <= 8; x++)
             {
@@ -29,15 +38,15 @@ namespace GhostChess.Board.Abstractions.Configuration
                     StringBuilder sb = new StringBuilder();
                     sb.Append(letter);
                     sb.Append(y);
-                    Node node = new Node(sb.ToString(), 
-                        Constants.CentralBoardZeroX + (x * Constants.FieldSizeX), 
-                        Constants.CentralBoardZeroY + (y * Constants.FieldSizeY));
+                    Node node = new Node(sb.ToString(),
+                        _boardConfiguration.CentralBoardZeroX + (x * _boardConfiguration.FieldSizeX), 
+                        _boardConfiguration.CentralBoardZeroY + (y * _boardConfiguration.FieldSizeY));
                     nodes.Add(node);
                 }
             }
         }
 
-        private void RegisterLeftIntermediateNodes(List<Node> nodes)
+        private void MapLeftIntermediateNodes(Nodes nodes)
         {
             for (int x = 0; x <= 2; x++)
             {
@@ -49,14 +58,14 @@ namespace GhostChess.Board.Abstractions.Configuration
                     sb.Append(letter);
                     sb.Append(y);
                     Node node = new Node(sb.ToString(),
-                        Constants.LeftBoardZeroX + (x * Constants.FieldSizeX),
-                        Constants.LeftBoardZeroY + (y * Constants.FieldSizeY));
+                        _boardConfiguration.LeftBoardZeroX + (x * _boardConfiguration.FieldSizeX),
+                        _boardConfiguration.LeftBoardZeroY + (y * _boardConfiguration.FieldSizeY));
                     nodes.Add(node);
                 }
             }
         }
 
-        private void RegisterRightIntermediateNodes(List<Node> nodes)
+        private void MapRightIntermediateNodes(Nodes nodes)
         {
             for (int x = 0; x <= 2; x++)
             {
@@ -68,14 +77,14 @@ namespace GhostChess.Board.Abstractions.Configuration
                     sb.Append(letter);
                     sb.Append(y);
                     Node node = new Node(sb.ToString(),
-                        Constants.RightBoardZeroX + (x * Constants.FieldSizeX),
-                        Constants.RightBoardZeroY + (y * Constants.FieldSizeY));
+                        _boardConfiguration.RightBoardZeroX + (x * _boardConfiguration.FieldSizeX),
+                        _boardConfiguration.RightBoardZeroY + (y * _boardConfiguration.FieldSizeY));
                     nodes.Add(node);
                 }
             }
         }
 
-        private void RegisterCentralBoardNodes(List<Node> nodes)
+        private void MapCentralBoardNodes(Nodes nodes)
         {
             for(int x = 0; x <= 7; x++)
             {
@@ -86,14 +95,14 @@ namespace GhostChess.Board.Abstractions.Configuration
                     sb.Append(letter);
                     sb.Append(y + 1);
                     Node node = new Node(sb.ToString(),
-                        Constants.CentralBoardZeroX + (x * Constants.FieldSizeX) + Constants.FieldSizeX / 2.0,
-                        Constants.CentralBoardZeroY + (y * Constants.FieldSizeY) + Constants.FieldSizeY / 2.0);
+                        _boardConfiguration.CentralBoardZeroX + (x * _boardConfiguration.FieldSizeX) + _boardConfiguration.FieldSizeX / 2.0,
+                        _boardConfiguration.CentralBoardZeroY + (y * _boardConfiguration.FieldSizeY) + _boardConfiguration.FieldSizeY / 2.0);
                     nodes.Add(node);
                 }
             }
         }
 
-        private void RegisterLeftBoardNodes(List<Node> nodes)
+        private void MapLeftBoardNodes(Nodes nodes)
         {
             for (int x = 0; x <= 1; x++)
             {
@@ -105,14 +114,14 @@ namespace GhostChess.Board.Abstractions.Configuration
                     sb.Append(letter);
                     sb.Append(y + 1);
                     Node node = new Node(sb.ToString(),
-                        Constants.LeftBoardZeroX + (x * Constants.FieldSizeX) + Constants.FieldSizeX / 2.0,
-                        Constants.LeftBoardZeroY + (y * Constants.FieldSizeY) + Constants.FieldSizeY / 2.0);
+                        _boardConfiguration.LeftBoardZeroX + (x * _boardConfiguration.FieldSizeX) + _boardConfiguration.FieldSizeX / 2.0,
+                        _boardConfiguration.LeftBoardZeroY + (y * _boardConfiguration.FieldSizeY) + _boardConfiguration.FieldSizeY / 2.0);
                     nodes.Add(node);
                 }
             }
         }
 
-        private void RegisterRightBoardNodes(List<Node> nodes)
+        private void MapRightBoardNodes(Nodes nodes)
         {
             for (int x = 0; x <= 1; x++)
             {
@@ -124,8 +133,8 @@ namespace GhostChess.Board.Abstractions.Configuration
                     sb.Append(letter);
                     sb.Append(y + 1);
                     Node node = new Node(sb.ToString(),
-                        Constants.RightBoardZeroX + (x * Constants.FieldSizeX) + Constants.FieldSizeX / 2.0,
-                        Constants.RightBoardZeroY + (y * Constants.FieldSizeY) + Constants.FieldSizeY / 2.0);
+                        _boardConfiguration.RightBoardZeroX + (x * _boardConfiguration.FieldSizeX) + _boardConfiguration.FieldSizeX / 2.0,
+                        _boardConfiguration.RightBoardZeroY + (y * _boardConfiguration.FieldSizeY) + _boardConfiguration.FieldSizeY / 2.0);
                     nodes.Add(node);
                 }
             }

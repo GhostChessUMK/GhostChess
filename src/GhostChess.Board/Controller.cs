@@ -1,19 +1,20 @@
 ﻿using GhostChess.Board.Abstractions.Commands;
 using GhostChess.Board.Abstractions.Controller;
-using GhostChess.Board.Abstractions.Models;
+using GhostChess.Board.Configuration;
 using GhostChess.Board.Commands;
 using GhostChess.RaspberryPi;
 using RJCP.IO.Ports;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using GhostChess.Board.Core.Models;
+using System;
 
 namespace GhostChess.Board
 {
     public class Controller : IController
     {
-        private IList<ICommand> commandList;
+        private Queue<ICommand> commandList;
         private SerialPortStream _serial;
         private Gpio _gpio;
 
@@ -21,40 +22,52 @@ namespace GhostChess.Board
         {
             _gpio = gpio;
             _serial = serial;
-            commandList = new List<ICommand>();
+            commandList = new Queue<ICommand>();
         }
 
         public IController Move(Node source, Node destination)
         {
-            commandList.Add(new MoveCommand(_serial, source, destination));
+            commandList.Enqueue(new MoveCommand(_serial, source, destination));
+            return this;
+        }
+
+        public IController Move(double x, double y)
+        {
+            commandList.Enqueue(new MoveCommand(_serial, x, y));
             return this;
         }
 
         public IController Sleep(int miliseconds)
         {
-            commandList.Add(new SleepCommand(miliseconds));
+            commandList.Enqueue(new SleepCommand(miliseconds));
             return this;
         }
 
         public IController MagnetOn()
         {
-            commandList.Add(new MagnetOnCommand(_gpio));
+            commandList.Enqueue(new MagnetOnCommand(_gpio));
             return this;
         }
 
         public IController MagnetOff()
         {
-            commandList.Add(new MagnetOffCommand(_gpio));
+            commandList.Enqueue(new MagnetOffCommand(_gpio));
             return this;
         }
 
-        public void Execute()
+        public async Task Run()
         {
-            foreach(var command in commandList)
+            Logger.Log("Awaiting commands...");
+            Logger.Log($"Enqueued commands: {commandList.Count}");
+            while (true)
             {
-                command.Execute();
+                if(commandList.TryDequeue(out var command))
+                {
+                    Logger.Log($"Enqueued commands: {commandList.Count}");
+                    await command.Execute();
+                }
+                await Task.Delay(250);
             }
-            commandList.Clear();
         }
     }
 }

@@ -1,14 +1,13 @@
-﻿using GhostChess.Board.Abstractions.Models;
-using System;
+﻿using GhostChess.Board.Abstractions.Pathfinders;
+using GhostChess.Board.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace GhostChess.Board.Abstractions
+namespace GhostChess.Board.Algorithms.Pathfinders
 {
-    public class Pathfinder
+    public class BreadthFirst : IPathfinder
     {
-        public List<Node> FindPath(Node source, Node destination)
+        public IEnumerable<Node> FindPath(Node source, Node target)
         {
             List<Node> visitedNodes = new List<Node>();
             Queue<List<Node>> pathToVisit = new Queue<List<Node>>();
@@ -21,12 +20,12 @@ namespace GhostChess.Board.Abstractions
                 List<Node> currentPath = pathToVisit.Dequeue();
                 Node lastNode = currentPath.ElementAt(currentPath.Count - 1);
 
-                if (lastNode == destination)
+                if (lastNode == target)
                 {
                     return currentPath;
                 }
 
-                foreach (var node in lastNode.ConnectedNodes.Where(t => t != null && t.isEmpty == true))
+                foreach (var node in lastNode.ConnectedNodes.Where(t => t != null && t.IsEmpty == true))
                 {
                     if (visitedNodes.Contains(node) == false)
                     {

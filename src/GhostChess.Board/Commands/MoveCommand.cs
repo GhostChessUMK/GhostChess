@@ -1,10 +1,9 @@
 ﻿using GhostChess.Board.Abstractions.Commands;
-using GhostChess.Board.Abstractions.Models;
+using GhostChess.Board.Core.Models;
 using RJCP.IO.Ports;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace GhostChess.Board.Commands
 {
@@ -12,21 +11,56 @@ namespace GhostChess.Board.Commands
     {
         private SerialPortStream _serial;
         private Node _source, _destination;
+        private double _x, _y;
 
         public MoveCommand(SerialPortStream serial, Node source, Node destination)
         {
             _serial = serial;
             _source = source;
             _destination = destination;
+            var vector = GetMoveVector(_source, _destination);
+            _x = vector.X;
+            _y = vector.Y;
         }
 
-        public void Execute()
+        public MoveCommand(SerialPortStream serial, double x, double y)
         {
-            var vector = GetMoveVector(_source, _destination);
-            Console.WriteLine($"Moving: {_source.Name} -> {_destination.Name}");
-            //_serial.Open();
-            _serial.WriteLine($"G00 X{vector.X} Y{vector.Y}");
-            //_serial.Close();
+            _serial = serial;
+            _x = x;
+            _y = y;
+        }
+
+        public async Task Execute()
+        {
+            if (_source != null || _destination != null)
+            {
+                Logger.Log($"Moving: {_source.Name} -> {_destination.Name}");
+            }
+            else
+            {
+                Logger.Log($"Moving: {_x} -> {_y}");
+            }
+            
+            if(_x != 0 || _y != 0)
+            {
+                _serial.WriteLine($"G00 X{_x} Y{_y}");
+                await MoveFinished();
+            }          
+        }
+
+        private async Task MoveFinished()
+        {
+            byte[] buffer = new byte[1024];
+            while (true)
+            {
+                await _serial.ReadAsync(buffer);
+                var response = System.Text.Encoding.Default.GetString(buffer);
+                if (response.Contains("ok"))
+                {
+                    _serial.DiscardOutBuffer();
+                    return;
+                }
+            }
         }
 
         private Vector GetMoveVector(Node source, Node destination)

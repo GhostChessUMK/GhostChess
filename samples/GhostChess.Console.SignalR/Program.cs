@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using System.Threading.Tasks;
 
-namespace GhostChess.Console
+namespace GhostChess.Console.SignalR
 {
     public class Program
     {
@@ -10,7 +10,7 @@ namespace GhostChess.Console
         public static async Task Main(string[] args)
         {
             connection = new HubConnectionBuilder()
-              .WithUrl("https://localhost:5000/chess?Password=P@ssw0rd&Board=true")
+              .WithUrl("https://ghostchessweb.azurewebsites.net/chess?Password=P@ssw0rd&Board=true")
               .Build();
 
             connection.On<string, string>("Move", (from, to) =>

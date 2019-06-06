@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GhostChess.Board.Core\GhostChess.Board.Core.csproj" />
+    <ProjectReference Include="..\GhostChess.Board.Abstractions\GhostChess.Board.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
