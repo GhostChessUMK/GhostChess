@@ -35,9 +35,9 @@ namespace GhostChess.Board
 
             Logger.Log("Configuring board...");
             var fieldSize = 50;
-            var boardZeroX = 0;
-            var boardZeroY = 0;
-            var sideFieldOffset = 30;
+            var boardZeroX = 7;
+            var boardZeroY = 53;
+            var sideFieldOffset = 7.5;
             var boardConfiguration = new BoardConfiguration
             {
                 LeftBoardZeroX = boardZeroX,
