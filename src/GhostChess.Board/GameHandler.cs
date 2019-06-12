@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static GhostChess.Board.Abstractions.Enums;
 
@@ -42,6 +43,7 @@ namespace GhostChess.Board
         {
             await SerialOpen();            
             MoveToZero();
+            SetUpGame();
             var color = Colors.White;
             
             _connection.On<string, string>("Move", (source, destination) =>
@@ -125,6 +127,20 @@ namespace GhostChess.Board
                 await Task.Delay(250);
             }
             _serial.DiscardOutBuffer();
+        }
+
+        private void SetUpGame()
+        {
+            var nodes = _nodes as Nodes;
+            var startingNodes = nodes.GetSetUpNodes();
+            foreach(var startingNode in startingNodes)
+            {
+                var node = _nodes.FirstOrDefault(p => p.Name.Equals(startingNode.Name));
+                if (node != null)
+                {
+                    node.IsEmpty = false;
+                }
+            }
         }
     }
 }
